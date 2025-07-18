@@ -1,0 +1,1120 @@
+{
+    "tableData": [
+      {
+        "id": "A",
+        "title": "A. Receipts total",
+        "isCategory": true,
+        "children": [
+          {
+            "id": 1,
+            "title": "Other Incomes",
+            "isTotalRow": false,
+            "q1": "123001.00",
+            "q2": "123000.00",
+            "q3": "123000.00",
+            "q4": "123000.00",
+            "cumulativeBalance": "492001.00",
+            "comment": null,
+            "order": 1
+          },
+          {
+            "id": 2,
+            "title": "Transfers from SPIU/RBC",
+            "isTotalRow": false,
+            "q1": "123000.00",
+            "q2": "123000.00",
+            "q3": "123000.00",
+            "q4": "123000.00",
+            "cumulativeBalance": "492000.00",
+            "comment": null,
+            "order": 2
+          },
+          {
+            "id": 3,
+            "title": "Receipts Total",
+            "isTotalRow": true,
+            "q1": "246001.00",
+            "q2": "246000.00",
+            "q3": "246000.00",
+            "q4": "246000.00",
+            "cumulativeBalance": "984001.00",
+            "comment": null,
+            "order": 3
+          }
+        ],
+        "order": 1
+      },
+      {
+        "id": "B",
+        "title": "B. Expenditures total",
+        "isCategory": true,
+        "children": [
+          {
+            "id": "B-01",
+            "title": "B-01. Human Resources + BONUS",
+            "isCategory": true,
+            "children": [
+              {
+                "id": 8,
+                "title": "Sample transport",
+                "isTotalRow": false,
+                "q1": "123000.00",
+                "q2": "123000.00",
+                "q3": "123000.00",
+                "q4": "123000.00",
+                "cumulativeBalance": "492000.00",
+                "comment": null,
+                "order": 1
+              },
+              {
+                "id": 11,
+                "title": "Infrastructure support",
+                "isTotalRow": false,
+                "q1": "123000.00",
+                "q2": "123000.00",
+                "q3": "123000.00",
+                "q4": "123000.00",
+                "cumulativeBalance": "492000.00",
+                "comment": null,
+                "order": 1
+              },
+              {
+                "id": 6,
+                "title": "Supervision CHWs",
+                "isTotalRow": false,
+                "q1": "-123000.00",
+                "q2": "-123000.00",
+                "q3": "-123000.00",
+                "q4": "-123000.00",
+                "cumulativeBalance": "-492000.00",
+                "comment": null,
+                "order": 1
+              },
+              {
+                "id": 4,
+                "title": "Laboratory Technician",
+                "isTotalRow": false,
+                "q1": "615000.00",
+                "q2": "615000.00",
+                "q3": "615000.00",
+                "q4": "615000.00",
+                "cumulativeBalance": "2460000.00",
+                "comment": null,
+                "order": 1
+              },
+              {
+                "id": 15,
+                "title": "Transfer to RBC",
+                "isTotalRow": false,
+                "q1": "45900.00",
+                "q2": "45900.00",
+                "q3": "45900.00",
+                "q4": "45900.00",
+                "cumulativeBalance": "183600.00",
+                "comment": null,
+                "order": 1
+              },
+              {
+                "id": 9,
+                "title": "Home visit lost to follow up",
+                "isTotalRow": false,
+                "q1": "-984000.00",
+                "q2": "-984000.00",
+                "q3": "-984000.00",
+                "q4": "-984000.00",
+                "cumulativeBalance": "-3936000.00",
+                "comment": null,
+                "order": 2
+              },
+              {
+                "id": 7,
+                "title": "Support group meetings",
+                "isTotalRow": false,
+                "q1": "738000.00",
+                "q2": "738000.00",
+                "q3": "738000.00",
+                "q4": "738000.00",
+                "cumulativeBalance": "2952000.00",
+                "comment": null,
+                "order": 2
+              },
+              {
+                "id": 5,
+                "title": "Nurse",
+                "isTotalRow": false,
+                "q1": "-1230000.00",
+                "q2": "-1230000.00",
+                "q3": "-1230000.00",
+                "q4": "-1230000.00",
+                "cumulativeBalance": "-4920000.00",
+                "comment": null,
+                "order": 2
+              },
+              {
+                "id": 12,
+                "title": "Office supplies",
+                "isTotalRow": false,
+                "q1": "123000.00",
+                "q2": "123000.00",
+                "q3": "123000.00",
+                "q4": "123000.00",
+                "cumulativeBalance": "492000.00",
+                "comment": null,
+                "order": 2
+              },
+              {
+                "id": 13,
+                "title": "Transport and travel",
+                "isTotalRow": false,
+                "q1": null,
+                "q2": null,
+                "q3": null,
+                "q4": null,
+                "cumulativeBalance": null,
+                "comment": null,
+                "order": 3
+              },
+              {
+                "id": 10,
+                "title": "Transport and travel for survey/surveillance",
+                "isTotalRow": false,
+                "q1": "123000.00",
+                "q2": "123000.00",
+                "q3": "123000.00",
+                "q4": "123000.00",
+                "cumulativeBalance": "492000.00",
+                "comment": null,
+                "order": 3
+              },
+              {
+                "id": 14,
+                "title": "Bank charges",
+                "isTotalRow": false,
+                "q1": "123000.00",
+                "q2": "123000.00",
+                "q3": "123000.00",
+                "q4": "123000.00",
+                "cumulativeBalance": "492000.00",
+                "comment": null,
+                "order": 4
+              },
+              {
+                "id": 16,
+                "title": "Expenditures Total",
+                "isTotalRow": true,
+                "q1": "-323100.00",
+                "q2": "-323100.00",
+                "q3": "-323100.00",
+                "q4": "-323100.00",
+                "cumulativeBalance": "-1292400.00",
+                "comment": null,
+                "order": 99
+              }
+            ],
+            "order": 1
+          },
+          {
+            "id": "B-02",
+            "title": "B-02. Monitoring & Evaluation",
+            "isCategory": true,
+            "children": [
+              {
+                "id": 4,
+                "title": "Laboratory Technician",
+                "isTotalRow": false,
+                "q1": "615000.00",
+                "q2": "615000.00",
+                "q3": "615000.00",
+                "q4": "615000.00",
+                "cumulativeBalance": "2460000.00",
+                "comment": null,
+                "order": 1
+              },
+              {
+                "id": 15,
+                "title": "Transfer to RBC",
+                "isTotalRow": false,
+                "q1": "45900.00",
+                "q2": "45900.00",
+                "q3": "45900.00",
+                "q4": "45900.00",
+                "cumulativeBalance": "183600.00",
+                "comment": null,
+                "order": 1
+              },
+              {
+                "id": 11,
+                "title": "Infrastructure support",
+                "isTotalRow": false,
+                "q1": "123000.00",
+                "q2": "123000.00",
+                "q3": "123000.00",
+                "q4": "123000.00",
+                "cumulativeBalance": "492000.00",
+                "comment": null,
+                "order": 1
+              },
+              {
+                "id": 8,
+                "title": "Sample transport",
+                "isTotalRow": false,
+                "q1": "123000.00",
+                "q2": "123000.00",
+                "q3": "123000.00",
+                "q4": "123000.00",
+                "cumulativeBalance": "492000.00",
+                "comment": null,
+                "order": 1
+              },
+              {
+                "id": 6,
+                "title": "Supervision CHWs",
+                "isTotalRow": false,
+                "q1": "-123000.00",
+                "q2": "-123000.00",
+                "q3": "-123000.00",
+                "q4": "-123000.00",
+                "cumulativeBalance": "-492000.00",
+                "comment": null,
+                "order": 1
+              },
+              {
+                "id": 5,
+                "title": "Nurse",
+                "isTotalRow": false,
+                "q1": "-1230000.00",
+                "q2": "-1230000.00",
+                "q3": "-1230000.00",
+                "q4": "-1230000.00",
+                "cumulativeBalance": "-4920000.00",
+                "comment": null,
+                "order": 2
+              },
+              {
+                "id": 7,
+                "title": "Support group meetings",
+                "isTotalRow": false,
+                "q1": "738000.00",
+                "q2": "738000.00",
+                "q3": "738000.00",
+                "q4": "738000.00",
+                "cumulativeBalance": "2952000.00",
+                "comment": null,
+                "order": 2
+              },
+              {
+                "id": 12,
+                "title": "Office supplies",
+                "isTotalRow": false,
+                "q1": "123000.00",
+                "q2": "123000.00",
+                "q3": "123000.00",
+                "q4": "123000.00",
+                "cumulativeBalance": "492000.00",
+                "comment": null,
+                "order": 2
+              },
+              {
+                "id": 9,
+                "title": "Home visit lost to follow up",
+                "isTotalRow": false,
+                "q1": "-984000.00",
+                "q2": "-984000.00",
+                "q3": "-984000.00",
+                "q4": "-984000.00",
+                "cumulativeBalance": "-3936000.00",
+                "comment": null,
+                "order": 2
+              },
+              {
+                "id": 10,
+                "title": "Transport and travel for survey/surveillance",
+                "isTotalRow": false,
+                "q1": "123000.00",
+                "q2": "123000.00",
+                "q3": "123000.00",
+                "q4": "123000.00",
+                "cumulativeBalance": "492000.00",
+                "comment": null,
+                "order": 3
+              },
+              {
+                "id": 13,
+                "title": "Transport and travel",
+                "isTotalRow": false,
+                "q1": null,
+                "q2": null,
+                "q3": null,
+                "q4": null,
+                "cumulativeBalance": null,
+                "comment": null,
+                "order": 3
+              },
+              {
+                "id": 14,
+                "title": "Bank charges",
+                "isTotalRow": false,
+                "q1": "123000.00",
+                "q2": "123000.00",
+                "q3": "123000.00",
+                "q4": "123000.00",
+                "cumulativeBalance": "492000.00",
+                "comment": null,
+                "order": 4
+              },
+              {
+                "id": 16,
+                "title": "Expenditures Total",
+                "isTotalRow": true,
+                "q1": "-323100.00",
+                "q2": "-323100.00",
+                "q3": "-323100.00",
+                "q4": "-323100.00",
+                "cumulativeBalance": "-1292400.00",
+                "comment": null,
+                "order": 99
+              }
+            ],
+            "order": 2
+          },
+          {
+            "id": "B-03",
+            "title": "B-03. Living Support to Clients/Target Populations",
+            "isCategory": true,
+            "children": [
+              {
+                "id": 8,
+                "title": "Sample transport",
+                "isTotalRow": false,
+                "q1": "123000.00",
+                "q2": "123000.00",
+                "q3": "123000.00",
+                "q4": "123000.00",
+                "cumulativeBalance": "492000.00",
+                "comment": null,
+                "order": 1
+              },
+              {
+                "id": 15,
+                "title": "Transfer to RBC",
+                "isTotalRow": false,
+                "q1": "45900.00",
+                "q2": "45900.00",
+                "q3": "45900.00",
+                "q4": "45900.00",
+                "cumulativeBalance": "183600.00",
+                "comment": null,
+                "order": 1
+              },
+              {
+                "id": 6,
+                "title": "Supervision CHWs",
+                "isTotalRow": false,
+                "q1": "-123000.00",
+                "q2": "-123000.00",
+                "q3": "-123000.00",
+                "q4": "-123000.00",
+                "cumulativeBalance": "-492000.00",
+                "comment": null,
+                "order": 1
+              },
+              {
+                "id": 4,
+                "title": "Laboratory Technician",
+                "isTotalRow": false,
+                "q1": "615000.00",
+                "q2": "615000.00",
+                "q3": "615000.00",
+                "q4": "615000.00",
+                "cumulativeBalance": "2460000.00",
+                "comment": null,
+                "order": 1
+              },
+              {
+                "id": 11,
+                "title": "Infrastructure support",
+                "isTotalRow": false,
+                "q1": "123000.00",
+                "q2": "123000.00",
+                "q3": "123000.00",
+                "q4": "123000.00",
+                "cumulativeBalance": "492000.00",
+                "comment": null,
+                "order": 1
+              },
+              {
+                "id": 5,
+                "title": "Nurse",
+                "isTotalRow": false,
+                "q1": "-1230000.00",
+                "q2": "-1230000.00",
+                "q3": "-1230000.00",
+                "q4": "-1230000.00",
+                "cumulativeBalance": "-4920000.00",
+                "comment": null,
+                "order": 2
+              },
+              {
+                "id": 12,
+                "title": "Office supplies",
+                "isTotalRow": false,
+                "q1": "123000.00",
+                "q2": "123000.00",
+                "q3": "123000.00",
+                "q4": "123000.00",
+                "cumulativeBalance": "492000.00",
+                "comment": null,
+                "order": 2
+              },
+              {
+                "id": 9,
+                "title": "Home visit lost to follow up",
+                "isTotalRow": false,
+                "q1": "-984000.00",
+                "q2": "-984000.00",
+                "q3": "-984000.00",
+                "q4": "-984000.00",
+                "cumulativeBalance": "-3936000.00",
+                "comment": null,
+                "order": 2
+              },
+              {
+                "id": 7,
+                "title": "Support group meetings",
+                "isTotalRow": false,
+                "q1": "738000.00",
+                "q2": "738000.00",
+                "q3": "738000.00",
+                "q4": "738000.00",
+                "cumulativeBalance": "2952000.00",
+                "comment": null,
+                "order": 2
+              },
+              {
+                "id": 13,
+                "title": "Transport and travel",
+                "isTotalRow": false,
+                "q1": null,
+                "q2": null,
+                "q3": null,
+                "q4": null,
+                "cumulativeBalance": null,
+                "comment": null,
+                "order": 3
+              },
+              {
+                "id": 10,
+                "title": "Transport and travel for survey/surveillance",
+                "isTotalRow": false,
+                "q1": "123000.00",
+                "q2": "123000.00",
+                "q3": "123000.00",
+                "q4": "123000.00",
+                "cumulativeBalance": "492000.00",
+                "comment": null,
+                "order": 3
+              },
+              {
+                "id": 14,
+                "title": "Bank charges",
+                "isTotalRow": false,
+                "q1": "123000.00",
+                "q2": "123000.00",
+                "q3": "123000.00",
+                "q4": "123000.00",
+                "cumulativeBalance": "492000.00",
+                "comment": null,
+                "order": 4
+              },
+              {
+                "id": 16,
+                "title": "Expenditures Total",
+                "isTotalRow": true,
+                "q1": "-323100.00",
+                "q2": "-323100.00",
+                "q3": "-323100.00",
+                "q4": "-323100.00",
+                "cumulativeBalance": "-1292400.00",
+                "comment": null,
+                "order": 99
+              }
+            ],
+            "order": 3
+          },
+          {
+            "id": "B-04",
+            "title": "B-04. Overheads (22 - Use of goods & services)",
+            "isCategory": true,
+            "children": [
+              {
+                "id": 8,
+                "title": "Sample transport",
+                "isTotalRow": false,
+                "q1": "123000.00",
+                "q2": "123000.00",
+                "q3": "123000.00",
+                "q4": "123000.00",
+                "cumulativeBalance": "492000.00",
+                "comment": null,
+                "order": 1
+              },
+              {
+                "id": 15,
+                "title": "Transfer to RBC",
+                "isTotalRow": false,
+                "q1": "45900.00",
+                "q2": "45900.00",
+                "q3": "45900.00",
+                "q4": "45900.00",
+                "cumulativeBalance": "183600.00",
+                "comment": null,
+                "order": 1
+              },
+              {
+                "id": 6,
+                "title": "Supervision CHWs",
+                "isTotalRow": false,
+                "q1": "-123000.00",
+                "q2": "-123000.00",
+                "q3": "-123000.00",
+                "q4": "-123000.00",
+                "cumulativeBalance": "-492000.00",
+                "comment": null,
+                "order": 1
+              },
+              {
+                "id": 4,
+                "title": "Laboratory Technician",
+                "isTotalRow": false,
+                "q1": "615000.00",
+                "q2": "615000.00",
+                "q3": "615000.00",
+                "q4": "615000.00",
+                "cumulativeBalance": "2460000.00",
+                "comment": null,
+                "order": 1
+              },
+              {
+                "id": 11,
+                "title": "Infrastructure support",
+                "isTotalRow": false,
+                "q1": "123000.00",
+                "q2": "123000.00",
+                "q3": "123000.00",
+                "q4": "123000.00",
+                "cumulativeBalance": "492000.00",
+                "comment": null,
+                "order": 1
+              },
+              {
+                "id": 5,
+                "title": "Nurse",
+                "isTotalRow": false,
+                "q1": "-1230000.00",
+                "q2": "-1230000.00",
+                "q3": "-1230000.00",
+                "q4": "-1230000.00",
+                "cumulativeBalance": "-4920000.00",
+                "comment": null,
+                "order": 2
+              },
+              {
+                "id": 12,
+                "title": "Office supplies",
+                "isTotalRow": false,
+                "q1": "123000.00",
+                "q2": "123000.00",
+                "q3": "123000.00",
+                "q4": "123000.00",
+                "cumulativeBalance": "492000.00",
+                "comment": null,
+                "order": 2
+              },
+              {
+                "id": 9,
+                "title": "Home visit lost to follow up",
+                "isTotalRow": false,
+                "q1": "-984000.00",
+                "q2": "-984000.00",
+                "q3": "-984000.00",
+                "q4": "-984000.00",
+                "cumulativeBalance": "-3936000.00",
+                "comment": null,
+                "order": 2
+              },
+              {
+                "id": 7,
+                "title": "Support group meetings",
+                "isTotalRow": false,
+                "q1": "738000.00",
+                "q2": "738000.00",
+                "q3": "738000.00",
+                "q4": "738000.00",
+                "cumulativeBalance": "2952000.00",
+                "comment": null,
+                "order": 2
+              },
+              {
+                "id": 13,
+                "title": "Transport and travel",
+                "isTotalRow": false,
+                "q1": null,
+                "q2": null,
+                "q3": null,
+                "q4": null,
+                "cumulativeBalance": null,
+                "comment": null,
+                "order": 3
+              },
+              {
+                "id": 10,
+                "title": "Transport and travel for survey/surveillance",
+                "isTotalRow": false,
+                "q1": "123000.00",
+                "q2": "123000.00",
+                "q3": "123000.00",
+                "q4": "123000.00",
+                "cumulativeBalance": "492000.00",
+                "comment": null,
+                "order": 3
+              },
+              {
+                "id": 14,
+                "title": "Bank charges",
+                "isTotalRow": false,
+                "q1": "123000.00",
+                "q2": "123000.00",
+                "q3": "123000.00",
+                "q4": "123000.00",
+                "cumulativeBalance": "492000.00",
+                "comment": null,
+                "order": 4
+              },
+              {
+                "id": 16,
+                "title": "Expenditures Total",
+                "isTotalRow": true,
+                "q1": "-323100.00",
+                "q2": "-323100.00",
+                "q3": "-323100.00",
+                "q4": "-323100.00",
+                "cumulativeBalance": "-1292400.00",
+                "comment": null,
+                "order": 99
+              }
+            ],
+            "order": 4
+          },
+          {
+            "id": "B-05",
+            "title": "B-05. Transfer to other reporting entities",
+            "isCategory": true,
+            "children": [
+              {
+                "id": 6,
+                "title": "Supervision CHWs",
+                "isTotalRow": false,
+                "q1": "-123000.00",
+                "q2": "-123000.00",
+                "q3": "-123000.00",
+                "q4": "-123000.00",
+                "cumulativeBalance": "-492000.00",
+                "comment": null,
+                "order": 1
+              },
+              {
+                "id": 8,
+                "title": "Sample transport",
+                "isTotalRow": false,
+                "q1": "123000.00",
+                "q2": "123000.00",
+                "q3": "123000.00",
+                "q4": "123000.00",
+                "cumulativeBalance": "492000.00",
+                "comment": null,
+                "order": 1
+              },
+              {
+                "id": 11,
+                "title": "Infrastructure support",
+                "isTotalRow": false,
+                "q1": "123000.00",
+                "q2": "123000.00",
+                "q3": "123000.00",
+                "q4": "123000.00",
+                "cumulativeBalance": "492000.00",
+                "comment": null,
+                "order": 1
+              },
+              {
+                "id": 15,
+                "title": "Transfer to RBC",
+                "isTotalRow": false,
+                "q1": "45900.00",
+                "q2": "45900.00",
+                "q3": "45900.00",
+                "q4": "45900.00",
+                "cumulativeBalance": "183600.00",
+                "comment": null,
+                "order": 1
+              },
+              {
+                "id": 4,
+                "title": "Laboratory Technician",
+                "isTotalRow": false,
+                "q1": "615000.00",
+                "q2": "615000.00",
+                "q3": "615000.00",
+                "q4": "615000.00",
+                "cumulativeBalance": "2460000.00",
+                "comment": null,
+                "order": 1
+              },
+              {
+                "id": 7,
+                "title": "Support group meetings",
+                "isTotalRow": false,
+                "q1": "738000.00",
+                "q2": "738000.00",
+                "q3": "738000.00",
+                "q4": "738000.00",
+                "cumulativeBalance": "2952000.00",
+                "comment": null,
+                "order": 2
+              },
+              {
+                "id": 12,
+                "title": "Office supplies",
+                "isTotalRow": false,
+                "q1": "123000.00",
+                "q2": "123000.00",
+                "q3": "123000.00",
+                "q4": "123000.00",
+                "cumulativeBalance": "492000.00",
+                "comment": null,
+                "order": 2
+              },
+              {
+                "id": 9,
+                "title": "Home visit lost to follow up",
+                "isTotalRow": false,
+                "q1": "-984000.00",
+                "q2": "-984000.00",
+                "q3": "-984000.00",
+                "q4": "-984000.00",
+                "cumulativeBalance": "-3936000.00",
+                "comment": null,
+                "order": 2
+              },
+              {
+                "id": 5,
+                "title": "Nurse",
+                "isTotalRow": false,
+                "q1": "-1230000.00",
+                "q2": "-1230000.00",
+                "q3": "-1230000.00",
+                "q4": "-1230000.00",
+                "cumulativeBalance": "-4920000.00",
+                "comment": null,
+                "order": 2
+              },
+              {
+                "id": 10,
+                "title": "Transport and travel for survey/surveillance",
+                "isTotalRow": false,
+                "q1": "123000.00",
+                "q2": "123000.00",
+                "q3": "123000.00",
+                "q4": "123000.00",
+                "cumulativeBalance": "492000.00",
+                "comment": null,
+                "order": 3
+              },
+              {
+                "id": 13,
+                "title": "Transport and travel",
+                "isTotalRow": false,
+                "q1": null,
+                "q2": null,
+                "q3": null,
+                "q4": null,
+                "cumulativeBalance": null,
+                "comment": null,
+                "order": 3
+              },
+              {
+                "id": 14,
+                "title": "Bank charges",
+                "isTotalRow": false,
+                "q1": "123000.00",
+                "q2": "123000.00",
+                "q3": "123000.00",
+                "q4": "123000.00",
+                "cumulativeBalance": "492000.00",
+                "comment": null,
+                "order": 4
+              },
+              {
+                "id": 16,
+                "title": "Expenditures Total",
+                "isTotalRow": true,
+                "q1": "-323100.00",
+                "q2": "-323100.00",
+                "q3": "-323100.00",
+                "q4": "-323100.00",
+                "cumulativeBalance": "-1292400.00",
+                "comment": null,
+                "order": 99
+              }
+            ],
+            "order": 5
+          }
+        ],
+        "order": 2
+      },
+      {
+        "id": "C",
+        "title": "C. SURPLUS / DEFICIT total",
+        "isCategory": true,
+        "children": [
+          {
+            "id": "surplus_deficit",
+            "title": "Surplus/Deficit Total",
+            "isTotalRow": true,
+            "q1": "1861501.00",
+            "q2": "1861500.00",
+            "q3": "1861500.00",
+            "q4": "1861500.00",
+            "cumulativeBalance": "7446001.00",
+            "order": 1
+          }
+        ],
+        "order": 3
+      },
+      {
+        "id": "D",
+        "title": "D. Financial Assets total",
+        "isCategory": true,
+        "children": [
+          {
+            "id": 17,
+            "title": "Cash at bank",
+            "isTotalRow": false,
+            "q1": "123000.00",
+            "q2": "123000.00",
+            "q3": "123000.00",
+            "q4": "123000.00",
+            "cumulativeBalance": "492000.00",
+            "comment": null,
+            "order": 1
+          },
+          {
+            "id": 18,
+            "title": "Petty cash",
+            "isTotalRow": false,
+            "q1": "123000.00",
+            "q2": "123000.00",
+            "q3": "123000.00",
+            "q4": "123000.00",
+            "cumulativeBalance": "492000.00",
+            "comment": null,
+            "order": 2
+          },
+          {
+            "id": 19,
+            "title": "Receivables (VAT refund)",
+            "isTotalRow": false,
+            "q1": "-1353000.00",
+            "q2": "-1353000.00",
+            "q3": "-1353000.00",
+            "q4": "-1353000.00",
+            "cumulativeBalance": "-5412000.00",
+            "comment": null,
+            "order": 3
+          },
+          {
+            "id": 20,
+            "title": "Other Receivables",
+            "isTotalRow": false,
+            "q1": "123000.00",
+            "q2": "123000.00",
+            "q3": "123000.00",
+            "q4": "123000.00",
+            "cumulativeBalance": "492000.00",
+            "comment": null,
+            "order": 4
+          },
+          {
+            "id": 21,
+            "title": "Financial Assets Total",
+            "isTotalRow": true,
+            "q1": "-984000.00",
+            "q2": "-984000.00",
+            "q3": "-984000.00",
+            "q4": "-984000.00",
+            "cumulativeBalance": "-3936000.00",
+            "comment": null,
+            "order": 5
+          }
+        ],
+        "order": 4
+      },
+      {
+        "id": "E",
+        "title": "E. Financial Liabilities total",
+        "isCategory": true,
+        "children": [
+          {
+            "id": 22,
+            "title": "Salaries on borrowed funds (BONUS)",
+            "isTotalRow": false,
+            "q1": "123000.00",
+            "q2": "123000.00",
+            "q3": "123000.00",
+            "q4": "123000.00",
+            "cumulativeBalance": "492000.00",
+            "comment": null,
+            "order": 1
+          },
+          {
+            "id": 23,
+            "title": "Payable - Maintenance & Repairs",
+            "isTotalRow": false,
+            "q1": "123000.00",
+            "q2": "123000.00",
+            "q3": "123000.00",
+            "q4": "123000.00",
+            "cumulativeBalance": "492000.00",
+            "comment": null,
+            "order": 2
+          },
+          {
+            "id": 24,
+            "title": "Payable - Office suppliers",
+            "isTotalRow": false,
+            "q1": "123000.00",
+            "q2": "123000.00",
+            "q3": "123000.00",
+            "q4": "123000.00",
+            "cumulativeBalance": "492000.00",
+            "comment": null,
+            "order": 3
+          },
+          {
+            "id": 25,
+            "title": "Payable - Transportation fees",
+            "isTotalRow": false,
+            "q1": "492000.00",
+            "q2": "492000.00",
+            "q3": "492000.00",
+            "q4": "492000.00",
+            "cumulativeBalance": "1968000.00",
+            "comment": null,
+            "order": 4
+          },
+          {
+            "id": 26,
+            "title": "VAT refund to RBC",
+            "isTotalRow": false,
+            "q1": "123000.00",
+            "q2": "123000.00",
+            "q3": "123000.00",
+            "q4": "123000.00",
+            "cumulativeBalance": "492000.00",
+            "comment": null,
+            "order": 5
+          },
+          {
+            "id": 27,
+            "title": "Financial Liabilities Total",
+            "isTotalRow": true,
+            "q1": "984000.00",
+            "q2": "984000.00",
+            "q3": "984000.00",
+            "q4": "984000.00",
+            "cumulativeBalance": "3936000.00",
+            "comment": null,
+            "order": 6
+          }
+        ],
+        "order": 5
+      },
+      {
+        "id": "F",
+        "title": "F. Net Financial Assets total",
+        "isCategory": true,
+        "children": [
+          {
+            "id": 28,
+            "title": "Net Financial Assets Total",
+            "isTotalRow": true,
+            "q1": "-1968000.00",
+            "q2": "-1968000.00",
+            "q3": "-1968000.00",
+            "q4": "-1968000.00",
+            "cumulativeBalance": "-7872000.00",
+            "comment": null,
+            "order": 1
+          }
+        ],
+        "order": 6
+      },
+      {
+        "id": "G",
+        "title": "G. Closing Balance total",
+        "isCategory": true,
+        "children": [
+          {
+            "id": 29,
+            "title": "Accumulated Surplus/Deficit",
+            "isTotalRow": false,
+            "q1": "123000.00",
+            "q2": "123000.00",
+            "q3": "123000.00",
+            "q4": "123000.00",
+            "cumulativeBalance": "492000.00",
+            "comment": null,
+            "order": 1
+          },
+          {
+            "id": 30,
+            "title": "Prior Year Adjustment",
+            "isTotalRow": false,
+            "q1": "123000.00",
+            "q2": "123000.00",
+            "q3": "123000.00",
+            "q4": "123000.00",
+            "cumulativeBalance": "492000.00",
+            "comment": null,
+            "order": 2
+          },
+          {
+            "id": 31,
+            "title": "Surplus/Deficit of the Period",
+            "isTotalRow": false,
+            "q1": "123000.00",
+            "q2": "123000.00",
+            "q3": "123000.00",
+            "q4": "123000.00",
+            "cumulativeBalance": "492000.00",
+            "comment": null,
+            "order": 3
+          },
+          {
+            "id": 32,
+            "title": "Closing Balance Total",
+            "isTotalRow": true,
+            "q1": "369000.00",
+            "q2": "369000.00",
+            "q3": "369000.00",
+            "q4": "369000.00",
+            "cumulativeBalance": "1476000.00",
+            "comment": null,
+            "order": 4
+          }
+        ],
+        "order": 7
+      }
+    ]
+  }
+  Explain

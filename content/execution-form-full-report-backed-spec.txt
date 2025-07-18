@@ -1,0 +1,924 @@
+{
+    "version": "1.0.0",
+    "fiscalYear": "2025",
+    "reportingPeriod": "2026",
+    "status": "draft",
+    "metadata": {
+        "facility": {
+            "id": "temp-id",
+            "name": "kinigi",
+            "type": "health_center",
+            "code": "KINIGI"
+        }
+    },
+    "items": [
+        {
+            "id": "a",
+            "code": "a",
+            "title": "A. Receipts",
+            "type": "category",
+            "level": 1,
+            "parentId": null,
+            "isEditable": true,
+            "isCalculated": false,
+            "values": {
+                "q1": 42000,
+                "q2": 46000,
+                "q3": 4140000,
+                "q4": 2906000,
+                "cumulativeBalance": 7134000,
+                "comments": null
+            },
+            "metadata": {
+                "category": "receipts",
+                "sortOrder": 0
+            }
+        },
+        {
+            "id": "a1",
+            "code": "a1",
+            "title": "Other Incomes",
+            "type": "line_item",
+            "level": 2,
+            "parentId": "a",
+            "isEditable": true,
+            "isCalculated": false,
+            "values": {
+                "q1": 12000,
+                "q2": 12000,
+                "q3": 140000,
+                "q4": 2400000,
+                "cumulativeBalance": 2564000,
+                "comments": null
+            },
+            "metadata": {
+                "category": "receipts",
+                "sortOrder": 1
+            }
+        },
+        {
+            "id": "a2",
+            "code": "a2",
+            "title": "Transfers from SPIU/RBC",
+            "type": "line_item",
+            "level": 2,
+            "parentId": "a",
+            "isEditable": true,
+            "isCalculated": false,
+            "values": {
+                "q1": 30000,
+                "q2": 34000,
+                "q3": 4000000,
+                "q4": 506000,
+                "cumulativeBalance": 4570000,
+                "comments": null
+            },
+            "metadata": {
+                "category": "receipts",
+                "sortOrder": 2
+            }
+        },
+        {
+            "id": "b",
+            "code": "b",
+            "title": "B. Expenditures",
+            "type": "category",
+            "level": 1,
+            "parentId": null,
+            "isEditable": true,
+            "isCalculated": false,
+            "values": {
+                "q1": 8633924,
+                "q2": 2079690,
+                "q3": 5188345,
+                "q4": 49995566,
+                "cumulativeBalance": 65897525,
+                "comments": null
+            },
+            "metadata": {
+                "category": "expenditures",
+                "sortOrder": 1000
+            }
+        },
+        {
+            "id": "b01",
+            "code": "b01",
+            "title": "01. Human Resources + BONUS",
+            "type": "category",
+            "level": 2,
+            "parentId": "b",
+            "isEditable": true,
+            "isCalculated": false,
+            "values": {
+                "q1": 360304,
+                "q2": 609930,
+                "q3": 653040,
+                "q4": 412500,
+                "cumulativeBalance": 2035774,
+                "comments": null
+            },
+            "metadata": {
+                "category": "expenditures",
+                "subCategory": "human_resources",
+                "sortOrder": 1001
+            }
+        },
+        {
+            "id": "b01-1",
+            "code": "b01-1",
+            "title": "Laboratory Technician",
+            "type": "line_item",
+            "level": 3,
+            "parentId": "b01",
+            "isEditable": true,
+            "isCalculated": false,
+            "values": {
+                "q1": 340000,
+                "q2": 125000,
+                "q3": 350000,
+                "q4": 12000,
+                "cumulativeBalance": 827000,
+                "comments": null
+            },
+            "metadata": {
+                "category": "expenditures",
+                "subCategory": "human_resources",
+                "sortOrder": 1011
+            }
+        },
+        {
+            "id": "b01-2",
+            "code": "b01-2",
+            "title": "Nurse",
+            "type": "line_item",
+            "level": 3,
+            "parentId": "b01",
+            "isEditable": true,
+            "isCalculated": false,
+            "values": {
+                "q1": 20304,
+                "q2": 484930,
+                "q3": 303040,
+                "q4": 400500,
+                "cumulativeBalance": 1208774,
+                "comments": null
+            },
+            "metadata": {
+                "category": "expenditures",
+                "subCategory": "human_resources",
+                "sortOrder": 1012
+            }
+        },
+        {
+            "id": "b02",
+            "code": "b02",
+            "title": "02. Monitoring & Evaluation",
+            "type": "category",
+            "level": 2,
+            "parentId": "b",
+            "isEditable": true,
+            "isCalculated": false,
+            "values": {
+                "q1": 3500000,
+                "q2": 32000,
+                "q3": 600000,
+                "q4": 45400000,
+                "cumulativeBalance": 49532000,
+                "comments": null
+            },
+            "metadata": {
+                "category": "expenditures",
+                "subCategory": "monitoring_evaluation",
+                "sortOrder": 1002
+            }
+        },
+        {
+            "id": "b02-1",
+            "code": "b02-1",
+            "title": "Supervision CHWs",
+            "type": "line_item",
+            "level": 3,
+            "parentId": "b02",
+            "isEditable": true,
+            "isCalculated": false,
+            "values": {
+                "q1": 100000,
+                "q2": 20000,
+                "q3": 300000,
+                "q4": 400000,
+                "cumulativeBalance": 820000,
+                "comments": null
+            },
+            "metadata": {
+                "category": "expenditures",
+                "subCategory": "monitoring_evaluation",
+                "sortOrder": 1021
+            }
+        },
+        {
+            "id": "b02-2",
+            "code": "b02-2",
+            "title": "Support group meetings",
+            "type": "line_item",
+            "level": 3,
+            "parentId": "b02",
+            "isEditable": true,
+            "isCalculated": false,
+            "values": {
+                "q1": 3400000,
+                "q2": 12000,
+                "q3": 300000,
+                "q4": 45000000,
+                "cumulativeBalance": 48712000,
+                "comments": null
+            },
+            "metadata": {
+                "category": "expenditures",
+                "subCategory": "monitoring_evaluation",
+                "sortOrder": 1022
+            }
+        },
+        {
+            "id": "b03",
+            "code": "b03",
+            "title": "03. Living Support to Clients/Target Populations",
+            "type": "category",
+            "level": 2,
+            "parentId": "b",
+            "isEditable": true,
+            "isCalculated": false,
+            "values": {
+                "q1": 4701200,
+                "q2": 1326500,
+                "q3": 3821200,
+                "q4": 4055000,
+                "cumulativeBalance": 13903900,
+                "comments": null
+            },
+            "metadata": {
+                "category": "expenditures",
+                "subCategory": "living_support",
+                "sortOrder": 1003
+            }
+        },
+        {
+            "id": "b03-1",
+            "code": "b03-1",
+            "title": "Sample transport",
+            "type": "line_item",
+            "level": 3,
+            "parentId": "b03",
+            "isEditable": true,
+            "isCalculated": false,
+            "values": {
+                "q1": 3200000,
+                "q2": 125000,
+                "q3": 3500000,
+                "q4": 25000,
+                "cumulativeBalance": 6850000,
+                "comments": null
+            },
+            "metadata": {
+                "category": "expenditures",
+                "subCategory": "living_support",
+                "sortOrder": 1031
+            }
+        },
+        {
+            "id": "b03-2",
+            "code": "b03-2",
+            "title": "Home visit lost to follow up",
+            "type": "line_item",
+            "level": 3,
+            "parentId": "b03",
+            "isEditable": true,
+            "isCalculated": false,
+            "values": {
+                "q1": 1500000,
+                "q2": 1200000,
+                "q3": 320000,
+                "q4": 30000,
+                "cumulativeBalance": 3050000,
+                "comments": null
+            },
+            "metadata": {
+                "category": "expenditures",
+                "subCategory": "living_support",
+                "sortOrder": 1032
+            }
+        },
+        {
+            "id": "b03-3",
+            "code": "b03-3",
+            "title": "Transport and travel for survey/surveillance",
+            "type": "line_item",
+            "level": 3,
+            "parentId": "b03",
+            "isEditable": true,
+            "isCalculated": false,
+            "values": {
+                "q1": 1200,
+                "q2": 1500,
+                "q3": 1200,
+                "q4": 4000000,
+                "cumulativeBalance": 4003900,
+                "comments": null
+            },
+            "metadata": {
+                "category": "expenditures",
+                "subCategory": "living_support",
+                "sortOrder": 1033
+            }
+        },
+        {
+            "id": "b04",
+            "code": "b04",
+            "title": "04. Overheads (22 - Use of goods & services)",
+            "type": "category",
+            "level": 2,
+            "parentId": "b",
+            "isEditable": true,
+            "isCalculated": false,
+            "values": {
+                "q1": 71220,
+                "q2": 98260,
+                "q3": 94105,
+                "q4": 97666,
+                "cumulativeBalance": 361251,
+                "comments": null
+            },
+            "metadata": {
+                "category": "expenditures",
+                "subCategory": "overheads",
+                "sortOrder": 1004
+            }
+        },
+        {
+            "id": "b04-1",
+            "code": "b04-1",
+            "title": "Infrastructure support",
+            "type": "line_item",
+            "level": 3,
+            "parentId": "b04",
+            "isEditable": true,
+            "isCalculated": false,
+            "values": {
+                "q1": 35000,
+                "q2": 23000,
+                "q3": 4555,
+                "q4": 4333,
+                "cumulativeBalance": 66888,
+                "comments": null
+            },
+            "metadata": {
+                "category": "expenditures",
+                "subCategory": "overheads",
+                "sortOrder": 1041
+            }
+        },
+        {
+            "id": "b04-2",
+            "code": "b04-2",
+            "title": "Office supplies",
+            "type": "line_item",
+            "level": 3,
+            "parentId": "b04",
+            "isEditable": true,
+            "isCalculated": false,
+            "values": {
+                "q1": 1200,
+                "q2": 3000,
+                "q3": 4500,
+                "q4": 4333,
+                "cumulativeBalance": 13033,
+                "comments": null
+            },
+            "metadata": {
+                "category": "expenditures",
+                "subCategory": "overheads",
+                "sortOrder": 1042
+            }
+        },
+        {
+            "id": "b04-3",
+            "code": "b04-3",
+            "title": "Transport and travel (M-Health)",
+            "type": "line_item",
+            "level": 3,
+            "parentId": "b04",
+            "isEditable": true,
+            "isCalculated": false,
+            "values": {
+                "q1": 3020,
+                "q2": 30040,
+                "q3": 40050,
+                "q4": 46000,
+                "cumulativeBalance": 119110,
+                "comments": null
+            },
+            "metadata": {
+                "category": "expenditures",
+                "subCategory": "overheads",
+                "sortOrder": 1043
+            }
+        },
+        {
+            "id": "b04-4",
+            "code": "b04-4",
+            "title": "Bank charges",
+            "type": "line_item",
+            "level": 3,
+            "parentId": "b04",
+            "isEditable": true,
+            "isCalculated": false,
+            "values": {
+                "q1": 32000,
+                "q2": 42220,
+                "q3": 45000,
+                "q4": 43000,
+                "cumulativeBalance": 162220,
+                "comments": null
+            },
+            "metadata": {
+                "category": "expenditures",
+                "subCategory": "overheads",
+                "sortOrder": 1044
+            }
+        },
+        {
+            "id": "b05",
+            "code": "b05",
+            "title": "05. Transfer to other reporting entities",
+            "type": "category",
+            "level": 2,
+            "parentId": "b",
+            "isEditable": true,
+            "isCalculated": false,
+            "values": {
+                "q1": 1200,
+                "q2": 13000,
+                "q3": 20000,
+                "q4": 30400,
+                "cumulativeBalance": 64600,
+                "comments": null
+            },
+            "metadata": {
+                "category": "expenditures",
+                "subCategory": "transfers",
+                "sortOrder": 1005
+            }
+        },
+        {
+            "id": "b05-1",
+            "code": "b05-1",
+            "title": "Transfer to RBC",
+            "type": "line_item",
+            "level": 3,
+            "parentId": "b05",
+            "isEditable": true,
+            "isCalculated": false,
+            "values": {
+                "q1": 1200,
+                "q2": 13000,
+                "q3": 20000,
+                "q4": 30400,
+                "cumulativeBalance": 64600,
+                "comments": null
+            },
+            "metadata": {
+                "category": "expenditures",
+                "subCategory": "transfers",
+                "sortOrder": 1051
+            }
+        },
+        {
+            "id": "c",
+            "code": "c",
+            "title": "C. SURPLUS / DEFICIT",
+            "type": "category",
+            "level": 1,
+            "parentId": null,
+            "isEditable": false,
+            "isCalculated": true,
+            "values": {
+                "q1": -8591924,
+                "q2": -2033690,
+                "q3": -1048345,
+                "q4": -47089566,
+                "cumulativeBalance": -58763525,
+                "comments": null
+            },
+            "metadata": {
+                "category": "surplus_deficit",
+                "sortOrder": 2000
+            }
+        },
+        {
+            "id": "d",
+            "code": "d",
+            "title": "D. Financial Assets",
+            "type": "category",
+            "level": 1,
+            "parentId": null,
+            "isEditable": true,
+            "isCalculated": false,
+            "values": {
+                "q1": 83900,
+                "q2": 513703,
+                "q3": 246300,
+                "q4": 458000,
+                "cumulativeBalance": 1301903,
+                "comments": null
+            },
+            "metadata": {
+                "category": "financial_assets",
+                "sortOrder": 3000
+            }
+        },
+        {
+            "id": "d1",
+            "code": "d1",
+            "title": "Cash at bank",
+            "type": "line_item",
+            "level": 2,
+            "parentId": "d",
+            "isEditable": true,
+            "isCalculated": false,
+            "values": {
+                "q1": 22000,
+                "q2": 23000,
+                "q3": 24000,
+                "q4": 25000,
+                "cumulativeBalance": 94000,
+                "comments": null
+            },
+            "metadata": {
+                "category": "financial_assets",
+                "sortOrder": 3001
+            }
+        },
+        {
+            "id": "d2",
+            "code": "d2",
+            "title": "Petty cash",
+            "type": "line_item",
+            "level": 2,
+            "parentId": "d",
+            "isEditable": true,
+            "isCalculated": false,
+            "values": {
+                "q1": 26000,
+                "q2": 27000,
+                "q3": 28000,
+                "q4": 400000,
+                "cumulativeBalance": 481000,
+                "comments": null
+            },
+            "metadata": {
+                "category": "financial_assets",
+                "sortOrder": 3002
+            }
+        },
+        {
+            "id": "d3",
+            "code": "d3",
+            "title": "Receivables (VAT refund)",
+            "type": "line_item",
+            "level": 2,
+            "parentId": "d",
+            "isEditable": true,
+            "isCalculated": false,
+            "values": {
+                "q1": 12500,
+                "q2": 13500,
+                "q3": 148800,
+                "q4": 30000,
+                "cumulativeBalance": 204800,
+                "comments": null
+            },
+            "metadata": {
+                "category": "financial_assets",
+                "sortOrder": 3003
+            }
+        },
+        {
+            "id": "d4",
+            "code": "d4",
+            "title": "Other Receivables",
+            "type": "line_item",
+            "level": 2,
+            "parentId": "d",
+            "isEditable": true,
+            "isCalculated": false,
+            "values": {
+                "q1": 23400,
+                "q2": 450203,
+                "q3": 45500,
+                "q4": 3000,
+                "cumulativeBalance": 522103,
+                "comments": null
+            },
+            "metadata": {
+                "category": "financial_assets",
+                "sortOrder": 3004
+            }
+        },
+        {
+            "id": "e",
+            "code": "e",
+            "title": "E. Financial Liabilities",
+            "type": "category",
+            "level": 1,
+            "parentId": null,
+            "isEditable": true,
+            "isCalculated": false,
+            "values": {
+                "q1": 53304,
+                "q2": 467506,
+                "q3": 104600,
+                "q4": 106250,
+                "cumulativeBalance": 731660,
+                "comments": null
+            },
+            "metadata": {
+                "category": "financial_liabilities",
+                "sortOrder": 4000
+            }
+        },
+        {
+            "id": "e1",
+            "code": "e1",
+            "title": "Salaries on borrowed funds (BONUS)",
+            "type": "line_item",
+            "level": 2,
+            "parentId": "e",
+            "isEditable": true,
+            "isCalculated": false,
+            "values": {
+                "q1": 1200,
+                "q2": 14000,
+                "q3": 13000,
+                "q4": 30400,
+                "cumulativeBalance": 58600,
+                "comments": null
+            },
+            "metadata": {
+                "category": "financial_liabilities",
+                "sortOrder": 4001
+            }
+        },
+        {
+            "id": "e2",
+            "code": "e2",
+            "title": "Payable - Maintenance & Repairs",
+            "type": "line_item",
+            "level": 2,
+            "parentId": "e",
+            "isEditable": true,
+            "isCalculated": false,
+            "values": {
+                "q1": 30004,
+                "q2": 3200,
+                "q3": 4200,
+                "q4": 5100,
+                "cumulativeBalance": 42504,
+                "comments": null
+            },
+            "metadata": {
+                "category": "financial_liabilities",
+                "sortOrder": 4002
+            }
+        },
+        {
+            "id": "e3",
+            "code": "e3",
+            "title": "Payable - Office suppliers",
+            "type": "line_item",
+            "level": 2,
+            "parentId": "e",
+            "isEditable": true,
+            "isCalculated": false,
+            "values": {
+                "q1": 5600,
+                "q2": 4500,
+                "q3": 2400,
+                "q4": 5550,
+                "cumulativeBalance": 18050,
+                "comments": null
+            },
+            "metadata": {
+                "category": "financial_liabilities",
+                "sortOrder": 4003
+            }
+        },
+        {
+            "id": "e4",
+            "code": "e4",
+            "title": "Payable - Transportation fees",
+            "type": "line_item",
+            "level": 2,
+            "parentId": "e",
+            "isEditable": true,
+            "isCalculated": false,
+            "values": {
+                "q1": 4500,
+                "q2": 45503,
+                "q3": 40000,
+                "q4": 40200,
+                "cumulativeBalance": 130203,
+                "comments": null
+            },
+            "metadata": {
+                "category": "financial_liabilities",
+                "sortOrder": 4004
+            }
+        },
+        {
+            "id": "e5",
+            "code": "e5",
+            "title": "VAT refund to RBC",
+            "type": "line_item",
+            "level": 2,
+            "parentId": "e",
+            "isEditable": true,
+            "isCalculated": false,
+            "values": {
+                "q1": 12000,
+                "q2": 400303,
+                "q3": 45000,
+                "q4": 25000,
+                "cumulativeBalance": 482303,
+                "comments": null
+            },
+            "metadata": {
+                "category": "financial_liabilities",
+                "sortOrder": 4005
+            }
+        },
+        {
+            "id": "f",
+            "code": "f",
+            "title": "F. Net Financial Assets",
+            "type": "category",
+            "level": 1,
+            "parentId": null,
+            "isEditable": false,
+            "isCalculated": true,
+            "values": {
+                "q1": 30596,
+                "q2": 46197,
+                "q3": 141700,
+                "q4": 351750,
+                "cumulativeBalance": 570243,
+                "comments": null
+            },
+            "metadata": {
+                "category": "net_assets",
+                "sortOrder": 5000
+            }
+        },
+        {
+            "id": "g",
+            "code": "g",
+            "title": "G. Closing Balance",
+            "type": "category",
+            "level": 1,
+            "parentId": null,
+            "isEditable": false,
+            "isCalculated": true,
+            "values": {
+                "q1": -8576924,
+                "q2": -2020290,
+                "q3": -1028345,
+                "q4": -47019566,
+                "cumulativeBalance": -58645125,
+                "comments": null
+            },
+            "metadata": {
+                "category": "closing_balances",
+                "sortOrder": 6000
+            }
+        },
+        {
+            "id": "g1",
+            "code": "g1",
+            "title": "Accumulated Surplus/Deficit",
+            "type": "line_item",
+            "level": 2,
+            "parentId": "g",
+            "isEditable": true,
+            "isCalculated": false,
+            "values": {
+                "q1": 12000,
+                "q2": 13000,
+                "q3": 15000,
+                "q4": 20000,
+                "cumulativeBalance": 60000,
+                "comments": null
+            },
+            "metadata": {
+                "category": "closing_balances",
+                "sortOrder": 6001
+            }
+        },
+        {
+            "id": "g2",
+            "code": "g2",
+            "title": "Prior Year Adjustment",
+            "type": "line_item",
+            "level": 2,
+            "parentId": "g",
+            "isEditable": true,
+            "isCalculated": false,
+            "values": {
+                "q1": 3000,
+                "q2": 400,
+                "q3": 5000,
+                "q4": 50000,
+                "cumulativeBalance": 58400,
+                "comments": null
+            },
+            "metadata": {
+                "category": "closing_balances",
+                "sortOrder": 6002
+            }
+        },
+        {
+            "id": "g3",
+            "code": "g3",
+            "title": "Surplus/Deficit of the Period",
+            "type": "line_item",
+            "level": 2,
+            "parentId": "g",
+            "isEditable": false,
+            "isCalculated": false,
+            "values": {
+                "q1": -8591924,
+                "q2": -2033690,
+                "q3": -1048345,
+                "q4": -47089566,
+                "cumulativeBalance": -58763525,
+                "comments": null
+            },
+            "metadata": {
+                "category": "closing_balances",
+                "sortOrder": 6003
+            }
+        }
+    ],
+    "totals": {
+        "receipts": {
+            "q1": 42000,
+            "q2": 46000,
+            "q3": 4140000,
+            "q4": 2906000,
+            "cumulativeBalance": 7134000
+        },
+        "expenditures": {
+            "q1": 17267848,
+            "q2": 4159380,
+            "q3": 10376690,
+            "q4": 99991132,
+            "cumulativeBalance": 131795050
+        },
+        "surplusDeficit": {
+            "q1": -8591924,
+            "q2": -2033690,
+            "q3": -1048345,
+            "q4": -47089566,
+            "cumulativeBalance": -58763525
+        },
+        "financialAssets": {
+            "q1": 83900,
+            "q2": 513703,
+            "q3": 246300,
+            "q4": 458000,
+            "cumulativeBalance": 1301903
+        },
+        "financialLiabilities": {
+            "q1": 53304,
+            "q2": 467506,
+            "q3": 104600,
+            "q4": 106250,
+            "cumulativeBalance": 731660
+        },
+        "netAssets": {
+            "q1": 30596,
+            "q2": 46197,
+            "q3": 141700,
+            "q4": 351750,
+            "cumulativeBalance": 570243
+        },
+        "closingBalances": {
+            "q1": -8576924,
+            "q2": -2020290,
+            "q3": -1028345,
+            "q4": -47019566,
+            "cumulativeBalance": -58645125
+        }
+    },
+    "validation": {
+        "isBalanced": true,
+        "errors": []
+    }
+}

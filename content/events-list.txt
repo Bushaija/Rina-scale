@@ -1,0 +1,40 @@
+events
+======
+
+ note_number |              code
+-------------+---------------------------------
+           1 | TAX_REVENUE
+           2 | GRANTS
+           3 | TRANSFERS_CENTRAL_TREASURY
+           4 | TRANSFERS_PUBLIC_ENTITIES
+           5 | FINES_PENALTIES_LICENSES
+           6 | PROPERTY_INCOME
+           7 | SALES_GOODS_SERVICES
+           8 | PROCEEDS_SALE_CAPITAL
+           9 | OTHER_REVENUE
+          10 | DOMESTIC_BORROWINGS
+          11 | EXTERNAL_BORROWINGS
+          12 | COMPENSATION_EMPLOYEES
+          13 | GOODS_SERVICES
+          14 | GRANTS_TRANSFERS
+          15 | SUBSIDIES
+          16 | SOCIAL_ASSISTANCE
+          17 | FINANCE_COSTS
+          18 | ACQUISITION_FIXED_ASSETS
+          19 | REPAYMENT_BORROWINGS
+          20 | OTHER_EXPENSES
+          21 | CASH_EQUIVALENTS_BEGIN
+          22 | CASH_EQUIVALENTS_END
+          23 | ADVANCE_PAYMENTS
+          24 | DIRECT_INVESTMENTS
+          25 | PAYABLES
+          26 | PAYMENTS_RECEIVED_ADVANCE
+          27 | RETAINED_PERFORMANCE_SECURITIES
+          28 | DIRECT_BORROWINGS
+          29 | ACCUMULATED_SURPLUS_DEFICITS
+          30 | PRIOR_YEAR_ADJUSTMENTS
+          31 | CHANGE_PAYABLES
+          32 | TOTAL_RECEIPTS
+          33 | TOTAL_PAYMENTS
+          34 | TOTAL_NON_FINANCIAL_ASSETS
+          35 | TOTAL_NET_LIABILITY_INCURRANCE

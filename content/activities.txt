@@ -1,0 +1,61 @@
+Activity Details
+================	
+
+A. Receipts [category]
+- Other Incomes [activity]
+- Transfers from SPIU/RBC [activity]
+
+
+B. Expenditures [category]
+    B-01. Human Resources + BONUS [B-01 sub-category]
+    - Laboratory Technician [activity]
+    - Nurse [activity]
+
+
+    B-02. Monitoring & Evaluation [sub-category]
+    - Supervision CHWs [activity]
+    - Support group meetings [activity]
+
+
+    B-03. Living Support to Clients/Target Populations [sub-category]
+    - Sample transport [activity]
+    - Home visit lost to follow up [activity]
+    - Transport and travel for survey/surveillance [activity]
+
+
+    B-04. Overheads (22 - Use of goods & services) [sub-category]
+    - Infrastructure support [activity]
+    - Office supplies [activity]
+    - Transport and travel (M-Health) [activity]
+    - Bank charges [activity]
+
+
+    B-05. Transfer to other reporting entities [sub-category]
+    - Transfer to RBC [activity]
+
+
+C. SURPLUS / DEFICIT [category]
+
+
+D. Financial Assets [category]
+- Cash at bank [activity]
+- Petty cash [activity]
+- Receivables (VAT refund) [activity]
+- Other Receivables [activity]
+
+
+E. Financial Liabilities [category]
+- Salaries on borrowed funds (BONUS) [activity]
+- Payable - Maintenance & Repairs [activity]
+- Payable - Office suppliers [activity]
+- Payable - Transportation fees [activity]
+- VAT refund to RBC [activity]
+
+
+F. Net Financial Assets [category]
+
+
+G. Closing Balance [category]
+- Accumulated Surplus/Deficit [activity]
+- Prior Year Adjustment [activity]
+- Surplus/Deficit of the Period [activity]

@@ -1,0 +1,356 @@
+{
+    "tableData": [
+        {
+            "id": "a",
+            "title": "A. Receipts",
+            "isCategory": true,
+            "children": [
+                {
+                    "id": "a1",
+                    "title": "Other Incomes",
+                    "cumulativeBalance": 100000,
+                    "q1": 25000,
+                    "q4": 25000,
+                    "q3": 25000,
+                    "q2": 25000
+                },
+                {
+                    "id": "a2",
+                    "title": "Transfers from SPIU/RBC",
+                    "cumulativeBalance": 100000,
+                    "q1": 25000,
+                    "q2": 25000,
+                    "q4": 25000,
+                    "q3": 25000
+                }
+            ],
+            "q1": 50000,
+            "q2": 50000,
+            "q3": 50000,
+            "q4": 50000,
+            "cumulativeBalance": 200000
+        },
+        {
+            "id": "b",
+            "title": "B. Expenditures",
+            "isCategory": true,
+            "children": [
+                {
+                    "id": "b01",
+                    "title": "01. Human Resources + BONUS",
+                    "isCategory": true,
+                    "children": [
+                        {
+                            "id": "b01-1",
+                            "title": "Laboratory Technician",
+                            "cumulativeBalance": 100000,
+                            "q1": 25000,
+                            "q2": 25000,
+                            "q3": 25000,
+                            "q4": 25000
+                        },
+                        {
+                            "id": "b01-2",
+                            "title": "Nurse",
+                            "cumulativeBalance": 100000,
+                            "q1": 25000,
+                            "q2": 25000,
+                            "q3": 25000,
+                            "q4": 25000
+                        }
+                    ],
+                    "q1": 50000,
+                    "q2": 50000,
+                    "q3": 50000,
+                    "q4": 50000,
+                    "cumulativeBalance": 200000
+                },
+                {
+                    "id": "b02",
+                    "title": "02. Monitoring & Evaluation",
+                    "isCategory": true,
+                    "children": [
+                        {
+                            "id": "b02-1",
+                            "title": "Supervision CHWs",
+                            "cumulativeBalance": 100000,
+                            "q1": 25000,
+                            "q2": 25000,
+                            "q3": 25000,
+                            "q4": 25000
+                        },
+                        {
+                            "id": "b02-2",
+                            "title": "Support group meetings",
+                            "cumulativeBalance": 100000,
+                            "q1": 25000,
+                            "q2": 25000,
+                            "q3": 25000,
+                            "q4": 25000
+                        }
+                    ],
+                    "q1": 50000,
+                    "q2": 50000,
+                    "q3": 50000,
+                    "q4": 50000,
+                    "cumulativeBalance": 200000
+                },
+                {
+                    "id": "b03",
+                    "title": "03. Living Support to Clients/Target Populations",
+                    "isCategory": true,
+                    "children": [
+                        {
+                            "id": "b03-1",
+                            "title": "Sample transport",
+                            "cumulativeBalance": 100000,
+                            "q1": 25000,
+                            "q2": 25000,
+                            "q3": 25000,
+                            "q4": 25000
+                        },
+                        {
+                            "id": "b03-2",
+                            "title": "Home visit lost to follow up",
+                            "cumulativeBalance": 100000,
+                            "q1": 25000,
+                            "q2": 25000,
+                            "q3": 25000,
+                            "q4": 25000
+                        },
+                        {
+                            "id": "b03-3",
+                            "title": "Transport and travel for survey/surveillance",
+                            "cumulativeBalance": 100000,
+                            "q1": 25000,
+                            "q2": 25000,
+                            "q3": 25000,
+                            "q4": 25000
+                        }
+                    ],
+                    "q1": 75000,
+                    "q2": 75000,
+                    "q3": 75000,
+                    "q4": 75000,
+                    "cumulativeBalance": 300000
+                },
+                {
+                    "id": "b04",
+                    "title": "04. Overheads (22 - Use of goods & services)",
+                    "isCategory": true,
+                    "children": [
+                        {
+                            "id": "b04-1",
+                            "title": "Infrastructure support",
+                            "cumulativeBalance": 100000,
+                            "q1": 25000,
+                            "q2": 25000,
+                            "q3": 25000,
+                            "q4": 25000
+                        },
+                        {
+                            "id": "b04-2",
+                            "title": "Office supplies",
+                            "cumulativeBalance": 100000,
+                            "q1": 25000,
+                            "q2": 25000,
+                            "q3": 25000,
+                            "q4": 25000
+                        },
+                        {
+                            "id": "b04-3",
+                            "title": "Transport and travel (M-Health)",
+                            "cumulativeBalance": 100000,
+                            "q1": 25000,
+                            "q2": 25000,
+                            "q3": 25000,
+                            "q4": 25000
+                        },
+                        {
+                            "id": "b04-4",
+                            "title": "Bank charges",
+                            "cumulativeBalance": 100000,
+                            "q1": 25000,
+                            "q2": 25000,
+                            "q3": 25000,
+                            "q4": 25000
+                        }
+                    ],
+                    "q1": 100000,
+                    "q2": 100000,
+                    "q3": 100000,
+                    "q4": 100000,
+                    "cumulativeBalance": 400000
+                },
+                {
+                    "id": "b05",
+                    "title": "05. Transfer to other reporting entities",
+                    "isCategory": true,
+                    "children": [
+                        {
+                            "id": "b05-1",
+                            "title": "Transfer to RBC"
+                        }
+                    ]
+                }
+            ],
+            "q1": 275000,
+            "q2": 275000,
+            "q3": 275000,
+            "q4": 275000,
+            "cumulativeBalance": 1100000
+        },
+        {
+            "id": "c",
+            "title": "C. SURPLUS / DEFICIT",
+            "isCategory": true,
+            "isEditable": false,
+            "cumulativeBalance": -900000,
+            "q1": -225000,
+            "q2": -225000,
+            "q3": -225000,
+            "q4": -225000
+        },
+        {
+            "id": "d",
+            "title": "D. Financial Assets",
+            "isCategory": true,
+            "children": [
+                {
+                    "id": "d1",
+                    "title": "Cash at bank"
+                },
+                {
+                    "id": "d2",
+                    "title": "Petty cash"
+                },
+                {
+                    "id": "d3",
+                    "title": "Receivables (VAT refund)"
+                },
+                {
+                    "id": "d4",
+                    "title": "Other Receivables"
+                }
+            ]
+        },
+        {
+            "id": "e",
+            "title": "E. Financial Liabilities",
+            "isCategory": true,
+            "children": [
+                {
+                    "id": "e1",
+                    "title": "Salaries on borrowed funds (BONUS)",
+                    "cumulativeBalance": 100000,
+                    "q1": 25000,
+                    "q2": 25000,
+                    "q3": 25000,
+                    "q4": 25000
+                },
+                {
+                    "id": "e2",
+                    "title": "Payable - Maintenance & Repairs",
+                    "cumulativeBalance": 100000,
+                    "q1": 25000,
+                    "q2": 25000,
+                    "q3": 25000,
+                    "q4": 25000
+                },
+                {
+                    "id": "e3",
+                    "title": "Payable - Office suppliers",
+                    "cumulativeBalance": 100000,
+                    "q1": 25000,
+                    "q2": 25000,
+                    "q3": 25000,
+                    "q4": 25000
+                },
+                {
+                    "id": "e4",
+                    "title": "Payable - Transportation fees",
+                    "cumulativeBalance": 100000,
+                    "q1": 25000,
+                    "q2": 25000,
+                    "q3": 25000,
+                    "q4": 25000
+                },
+                {
+                    "id": "e5",
+                    "title": "VAT refund to RBC",
+                    "cumulativeBalance": 100000,
+                    "q1": 25000,
+                    "q2": 25000,
+                    "q3": 25000,
+                    "q4": 25000
+                }
+            ],
+            "q1": 125000,
+            "q2": 125000,
+            "q3": 125000,
+            "q4": 125000,
+            "cumulativeBalance": 500000
+        },
+        {
+            "id": "f",
+            "title": "F. Net Financial Assets",
+            "isCategory": true,
+            "isEditable": false,
+            "cumulativeBalance": -500000,
+            "q1": -125000,
+            "q2": -125000,
+            "q3": -125000,
+            "q4": -125000
+        },
+        {
+            "id": "g",
+            "title": "G. Closing Balance",
+            "isCategory": true,
+            "isEditable": false,
+            "children": [
+                {
+                    "id": "g1",
+                    "title": "Accumulated Surplus/Deficit",
+                    "isEditable": true,
+                    "cumulativeBalance": 100000,
+                    "q1": 25000,
+                    "q2": 25000,
+                    "q3": 25000,
+                    "q4": 25000
+                },
+                {
+                    "id": "g2",
+                    "title": "Prior Year Adjustment",
+                    "isEditable": true,
+                    "cumulativeBalance": 100000,
+                    "q1": 25000,
+                    "q2": 25000,
+                    "q3": 25000,
+                    "q4": 25000
+                },
+                {
+                    "id": "g3",
+                    "title": "Surplus/Deficit of the Period",
+                    "isEditable": false,
+                    "cumulativeBalance": -900000,
+                    "q1": -225000,
+                    "q2": -225000,
+                    "q3": -225000,
+                    "q4": -225000
+                }
+            ],
+            "q1": -175000,
+            "q2": -175000,
+            "q3": -175000,
+            "q4": -175000,
+            "cumulativeBalance": -700000
+        }
+    ],
+    "metadata": {
+	    "project": "hiv",
+        "healthFacility": "busogo",
+        "healthFacilityType": "health_center",
+        "district": "Musanze",
+        "reportingPeriod": "2026"
+    }
+}

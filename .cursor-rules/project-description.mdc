@@ -1,0 +1,99 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+project description
+-------------------
+
+This project aims to develop a full-stack web application that modernizes and streamlines the annual budgeting and execution monitoring of HIV program activities across Rwanda's 30 districts. Each district contains a district hospital and multiple health centers, all of which are independently responsible for planning and implementing HIV-related activities based on their capacities.
+
+Historically, this process has been managed manually using Excel spreadsheets, resulting in inefficiencies, data inconsistencies, and limited financial visibility. The new system will replace this with an automated, centralized, and scalable digital platform, enabling real-time monitoring, standardization of reporting, and generation of core financial statements.
+
+core objectives
+---------------
+
+- Digitize and centralize the budget planning and execution processes for district hospitals and health centers.
+- Provide district hospital accountants with a secure platform to manage, track, and report HIV program financial activities.
+- Enable automated generation of standard financial statements from execution records.
+- Improve accuracy, transparency, and timeliness of financial reporting across the national HIV program.
+
+Primary User:
+------------
+
+- District Hospital Accountant
+
+User roles and access
+---------------------
+
+1. Assigned to one district hospital during sign-up.
+2. Manages budget plans and execution for:
+- Their own hospital
+- All health centers under that hospital's jurisdiction.
+
+User Account Setup
+-------------------
+
+Capture personal and work-related data at registration:
+- Full name, email, phone
+- Province, District, Hospital name
+
+This data is used to:
+- Automatically determine the scope of facilities the user manages
+- Filter access to planning and execution records only for relevant entities
+
+
+Annual Activity Planning
+------------------------
+
+Each facility (hospital or health center) defines a custom set of activities annually.
+
+Activities include:
+- Descriptions
+- Estimated cost
+- Timelines
+
+Hospital and health centers may have different sets of activities.
+
+Activity Execution
+------------------
+
+Accountants record actual execution of planned activities:
+- Real cost incurred
+- Execution date
+- Notes or documentation
+
+Execution data feeds into financial reporting modules.
+
+compiled report
+---------------
+
+All executed records across both hospital and health centers are automatically consolidated to produce accurate district-level a compiled reports.
+
+
+Financial Statement Generation
+------------------------------
+
+Based on execution data, the system auto-generates the following financial statements, both per facility and consolidated at the hospital level (including all its health centers):
+
+1. Statement of Revenues and Expenditures
+2. Statement of Financial Assets and Liabilities (Balance Sheet)
+3. Statement of Cash Flows
+4. Statement of Changes in Net Assets
+5. Statement of Budget vs Actual
+
+All statements are exportable as PDF
+
+
+Impact
+------
+
+By replacing Excel-based workflows, this system will:
+- Improve efficiency and accuracy of financial tracking
+- Enable timely, data-driven decision making
+- Simplify national-level reporting and auditing
+- Ensure financial accountability in HIV program implementation
+
+
+
+

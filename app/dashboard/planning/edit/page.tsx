@@ -37,7 +37,10 @@ export default function EditPlanPage() {
     isLoading, 
     error, 
     isError 
-  } = useGetPlanDataByFacilityId(idToUse, true, { program: programFilter });
+  } = useGetPlanDataByFacilityId(idToUse, true, { 
+    program: programFilter,
+    facilityType: facilityType || 'health_center'
+  });
 
   const updatePlanningData = useUpdatePlanningData();
 
@@ -89,8 +92,8 @@ export default function EditPlanPage() {
           await updatePlanningData.mutateAsync({
             id: activity.planningDataId!,
             json: {
-              frequency: Number(activity.frequency),
-              unitCost: Number(activity.unitCost),
+              frequency: Number(activity.frequency) || 0,
+              unitCost: Number(activity.unitCost) || 0,
               countQ1: Number(activity.countQ1) || 0,
               countQ2: Number((activity as any).countQ2) || 0,
               countQ3: Number((activity as any).countQ3) || 0,

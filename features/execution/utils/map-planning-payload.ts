@@ -86,13 +86,13 @@ export const mapPlanningPayload = (
       facilityId: opts.facilityId,
       reportingPeriodId: opts.reportingPeriodId,
       projectId: opts.projectId,
-      frequency: activity.frequency,
-      unitCost: activity.unitCost,
+      frequency: activity.frequency ?? 0,
+      unitCost: activity.unitCost ?? 0,
       countQ1: activity.countQ1 ?? 0,
       countQ2: (activity as any).countQ2 ?? 0, // All programs support Q2-Q4
       countQ3: (activity as any).countQ3 ?? 0,
       countQ4: (activity as any).countQ4 ?? 0,
-      comment: activity.comment,
+      comment: activity.comment ?? '',
     } as const;
 
     // Validate against Zod schema to catch issues early (will throw if invalid)

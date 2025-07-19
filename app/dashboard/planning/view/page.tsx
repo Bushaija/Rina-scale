@@ -46,7 +46,10 @@ export default function ViewPlanPage() {
     isLoading, 
     error, 
     isError 
-  } = useGetPlanDataByFacilityId(idToUse, true, { program: programFilter });
+  } = useGetPlanDataByFacilityId(idToUse, true, { 
+    program: programFilter,
+    facilityType: facilityType || 'health_center'
+  });
 
   if (isLoading) {
     return (

@@ -1,5 +1,9 @@
 import { z } from "zod";
-import { MALARIA_ACTIVITIES } from "@/features/planning/constants/malaria/malaria-activities";
+// centralized activities
+
+// NOTE: Hooks cannot be used in this schema module. We'll use the static constant for schema generation.
+// If dynamic categories are required, move that logic into a React component and call the hook there.
+const activities = {};
 
 // Base schema for a single activity row
 const baseActivitySchema = z.object({
@@ -41,7 +45,7 @@ export type Plan = z.infer<typeof planSchema>;
 
 
 // Export both activity categories for use
-export const ACTIVITY_CATEGORIES = MALARIA_ACTIVITIES;
+export const ACTIVITY_CATEGORIES: Record<string, any> = {};
 
 // Helper to create a skeleton activity
 export const createEmptyActivity = (
@@ -113,18 +117,19 @@ export const calculateTotalBudget = (activity: Activity): number => {
 
 // Generate default activities for a new plan
 export const generateDefaultActivities = (): Activity[] => {
-  const activities: Activity[] = [];
-  const categoriesSource = MALARIA_ACTIVITIES;
+  const result: Activity[] = [];
+
+  // ACTIVITY_CATEGORIES is expected to be an object whose keys are category names
+  // and values are arrays of activity descriptors.
+  const categoriesSource: Record<string, { activity: string; typeOfActivity: string }[]> = {};
 
   Object.entries(categoriesSource).forEach(([category, entries]) => {
-    (entries as { activity: string; typeOfActivity: string }[]).forEach(entry => {
-      activities.push(createEmptyActivity(
-        category, 
-        entry.typeOfActivity,
-        entry.activity
-      ));
+    entries.forEach((entry) => {
+      result.push(
+        createEmptyActivity(category, entry.typeOfActivity, entry.activity)
+      );
     });
   });
 
-  return activities;
+  return result;
 }; 

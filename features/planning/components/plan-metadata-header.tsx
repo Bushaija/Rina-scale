@@ -19,7 +19,7 @@ const StatusBadge = ({ status }: { status: PlanStatus | undefined }) => {
 };
 
 export function PlanMetadataHeader({
-  program = "HIV Program",
+  program = "No Program Selected",
   facilityName = "Facility",
   facilityType = "Type",
   // district = "District",

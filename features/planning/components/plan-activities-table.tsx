@@ -62,7 +62,13 @@ export function PlanActivitiesTable({
           </TableHeader>
           <TableBody>
             {Object.keys(activityCategories).map((category) => {
-              const entries = activityCategories[category];
+              // Determine list of entry descriptors for this category
+              const entries: ActivityEntry[] = Array.isArray(activityCategories[category])
+                ? (activityCategories[category] as any)
+                : (categorizedActivities[category] || []).map((a: any) => ({
+                    activity: a.activity ?? a.name ?? '',
+                    typeOfActivity: a.typeOfActivity ?? a.name ?? ''
+                  }));
               const categoryActivities = categorizedActivities[category] || [];
               const totals = categoryTotals[category];
               const isExpanded = expandedCategories[category];

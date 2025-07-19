@@ -15,10 +15,8 @@ import { mapPlanningPayload } from '@/features/execution/utils/map-planning-payl
 import { useListPlanningActivities } from '@/features/planning-activities/api/use-list-planning-activities';
 import { useCreatePlanningData } from '@/features/planning-data/api/use-create-planning-data';
 
-// Dynamic imports for different program schemas
-import { generateDefaultActivities as generateHIVActivities } from '@/features/planning/schema/hiv/plan-form-schema';
-import { generateDefaultActivities as generateMalariaActivities } from '@/features/planning/schema/malaria/plan-form-schema';
-import { generateDefaultActivities as generateTBActivities } from '@/features/planning/schema/tb/plan-form-schema';
+// Centralized hooks
+import { useGenerateDefaultActivities } from '@/features/planning-config/api/use-planning-activities';
 
 type FacilityByName = { facilityId: number; facilityName: string };
 
@@ -27,7 +25,7 @@ export default function PlanningNewPage() {
   const searchParams = useSearchParams();
   const facilityNameParam = searchParams.get("facilityName")?.toLowerCase() ?? "";
   const facilityTypeParam = searchParams.get("facilityType");
-  const programParam = searchParams.get("program");
+  const programCodeParam = searchParams.get("program")?.toUpperCase() ?? "HIV";
 
   const { data: session } = authClient.useSession();
   const { data: facility, isLoading: isLoadingFacility } = useGetFacilityByName(facilityNameParam, !!facilityNameParam);
@@ -35,7 +33,25 @@ export default function PlanningNewPage() {
   const { data: activitiesResp } = useListPlanningActivities();
   const createPlanningData = useCreatePlanningData();
 
-  const programKey = (programParam ?? "hiv").toLowerCase();
+  // Map possible URL program codes (both short and long forms) to canonical keys
+  const codeToNameMap: Record<string, string> = {
+    HIV: 'hiv',
+    MAL: 'malaria',   // 3-letter code
+    MALARIA: 'malaria', // full name
+    TB: 'tb',
+  };
+  const programKey = codeToNameMap[programCodeParam] ?? 'hiv';
+
+  // Map canonical program keys to 3-letter project codes expected by the API
+  const programToProjectCode: Record<string, string> = {
+    hiv: 'HIV',
+    malaria: 'MAL',
+    tb: 'TB',
+  };
+
+  const projectCodeForApi = programToProjectCode[programKey] ?? 'HIV';
+
+  // Map canonical program keys (lower-case) to project IDs
   const projectIdLookup: Record<string, number> = {
     hiv: 1,
     malaria: 2,
@@ -52,20 +68,13 @@ export default function PlanningNewPage() {
   const isHospital = facilityTypeParam === "health_center" ? false : true;
 
 
-  // Generate initial activities based on program and facility type
-  const getInitialActivities = () => {
-    switch (programKey) {
-      case 'malaria':
-        return generateMalariaActivities();
-      case 'tb':
-        return generateTBActivities();
-      case 'hiv':
-      default:
-        return generateHIVActivities(isHospital);
-    }
-  };
+  // Generate initial activities dynamically from centralized system
+  const initialActivities = useGenerateDefaultActivities(
+    projectCodeForApi,
+    isHospital ? 'hospital' : 'health_center'
+  );
 
-  const initialActivities = getInitialActivities();
+  const isLoadingInitialActivities = initialActivities.length === 0; // until data arrives
 
   const handleFormSubmit = async (plan: any) => {
 
@@ -128,6 +137,7 @@ export default function PlanningNewPage() {
         } catch (rowError) {
           // Continue with the next row instead of breaking the entire loop
           toast.error(`Failed to save activity ${i + 1}: ${rowError}`);
+          console.error("failed to save activity: ", rowError)
           continue;
         }
 
@@ -152,10 +162,11 @@ export default function PlanningNewPage() {
       toast.error("Failed to save planning data", {
         description: "An error occurred while saving some planning data entries. Please try again."
       });
+      console.error("Error saving planning data", e);
     }
   };
 
-  const initialLoading = isLoadingFacility || isLoadingReportingPeriods || isLoadingProject;
+  const initialLoading = isLoadingFacility || isLoadingReportingPeriods || isLoadingProject || isLoadingInitialActivities;
   if (initialLoading) {
     return <div className="container mx-auto p-4">
       <FormSkeleton />
@@ -172,7 +183,7 @@ export default function PlanningNewPage() {
             isEdit={false}
             onSubmitSuccess={handleFormSubmit}
             metadata={{
-              program: programParam ?? "No Program Selected",
+              program: programCodeParam ?? "No Program Selected",
               facilityType: facilityTypeParam === "health_center" ? "Health Center" : "Hospital",
               facilityName: facilityNameParam ?? "No Facility Selected",
             }}

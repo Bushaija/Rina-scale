@@ -28,8 +28,9 @@ export default function EditPlanPage() {
   // Support readonly mode via query parameter
   const isReadOnlyMode = readOnlyParam === 'true';
   
-  // Map project codes to consistent program names for API
-  const programFilter = program?.toLowerCase() || undefined;
+  // Convert URL program code (HIV, MAL, TB) to canonical program names for API (hiv, malaria, tb)
+  const codeToNameMap: Record<string, string> = { HIV: 'hiv', MAL: 'malaria', TB: 'tb' };
+  const programFilter = program ? codeToNameMap[program.toUpperCase()] : undefined;
   
   const { 
     data: planData, 

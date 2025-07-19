@@ -38,139 +38,6 @@ export interface PlanData {
 // Helper function to transform API response
 // ---------------------------------------------
 
-// Map API category names to frontend category names by program
-const hivCategoryNameMap: Record<string, string> = {
-  "Human Resources": "Human Resources (HR)",
-  "Travel Related Costs": "Travel Related Costs (TRC)", 
-  "Health Products & Equipment": "Health Products & Equipment (HPE)",
-  "Program Administration Costs": "Program Administration Costs (PA)"
-};
-
-const malariaCategoryNameMap: Record<string, string> = {
-  "Epidemiology": "Epidemiology",
-  "Program Management": "Program Management",
-  "Human Resources": "Human Resources"
-};
-
-const tbCategoryNameMap: Record<string, string> = {
-  "Human Resources": "Human Resources (HR)",
-  "Travel Related Costs": "Travel Related Costs (TRC)",
-  "Program Administration Costs": "Program Administration Costs (PA)"
-};
-
-// Map typeOfActivity to the correct activity description expected by the constants
-// Separate maps for health centers and hospitals to avoid conflicts
-
-const hivHealthCenterActivityDescriptionMap: Record<string, string> = {
-  // Human Resources (HR)
-  "HC Nurses (A1) Salary": "Provide salaries for health facilities staff (DHs, HCs)",
-  "HC Lab Technician (A1) Salary": "Provide salaries for health facilities staff (DHs, HCs)",
-  "Bonus (All staff paid on GF)": "Provide salaries for health facilities staff (DHs, HCs)",
-  
-  // Travel Related Costs (TRC)
-  "Workshop": "Conduct support group meeting at Health Facilities especially for adolescents and children",
-  "Supervision (CHWs)": "Conduct supervision from Health centers to CHWs",
-  "Supervision (Home Visit)": "Conduct home visit for lost to follow up",
-  "Transport": "Conduct sample transportation from Health centers to District Hospitals",
-  
-  // Health Products & Equipment (HPE)
-  "Maintenance and Repair": "Support to DHs and HCs to improve and maintain infrastructure standards",
-  
-  // Program Administration Costs (PA)
-  "Communication": "Provide running costs for DHs & HCs",
-  "Office Supplies": "Provide running costs for DHs & HCs",
-  "Transport (Mission & Reporting Fee)": "Provide running costs for DHs & HCs",
-  "Bank charges": "Provide running costs for DHs & HCs",
-};
-
-const hivHospitalActivityDescriptionMap: Record<string, string> = {
-  // Human Resources (HR)
-  "DH Medical Dr. Salary": "Provide salaries for health facilities staff (DHs, HCs)",
-  "Senior Medical Dr. Salary": "Provide salaries for health facilities staff (DHs, HCs)",
-  "Chief Medical Dr. Salary": "Provide salaries for health facilities staff (DHs, HCs)",
-  "Junior Medical Dr. or Mentor Salary": "Provide salaries for health facilities staff (DHs, HCs)",
-  "Pharmacist Salary": "Provide salaries for health facilities staff (DHs, HCs)",
-  "Nurse Salary": "Provide salaries for health facilities staff (DHs, HCs)",
-  "CHW supervisor Salary": "Provide salaries for health facilities staff (DHs, HCs)",
-  "Accountant Salary": "Provide salaries for health facilities staff (DHs, HCs)",
-  "All Staff Bonus": "Provide bonus for 2023-24",
-  
-  // Travel Related Costs (TRC)
-  "Campaign for HIV testing": "Conduct outreach to provide HIV testing service in communities",
-  "Campaign (All)": "Conduct outreach VMMC provision at decentralized level",
-  "Training": "Conduct training of Peer educators for Negative partner of Sero-Discordant couples on HIV and AIDS and sexual health issues",
-  "Supervision (All)": "Conduct integrated clinical mentorship  from District Hospital to Health centres  to support Treat All and DSDM implementation",
-  "Workshop (Transport & Perdiem)": "Conduct quarterly multidisciplinary team meeting (MDT). Participants are those not supported by other donor",
-  "Meeting": "Conduct support group meeting at Health Facilities especially for adolescents and children and younger adults",
-  "Transport": "Conduct sample transportation from  District Hospitals to Referal hospitals/NRL",
-  
-  // Health Products & Equipment (HPE)
-  "Maintenance": "Support to DHs and HCs to improve and maintain infrastructure standards- Motor car Vehicles",
-  
-  // Program Administration Costs (PA)
-  "Bank charges & commissions": "National and sub-HIV databases",
-  "Fuel": "National and sub-HIV databases",
-  "Communication (Airtime)": "Infrastructure and Equipment",
-  "Communication (Internet)": "Infrastructure and Equipment",
-};
-
-// Malaria activity mappings - both hospital and health center use same activities for malaria
-const malariaActivityDescriptionMap: Record<string, string> = {
-  // Epidemiology
-  "Participants at DHs staff": "Data Manager, Planning and M&E officer, CHWs Supervisor, DG or Clinical Director",
-  "Provide Perdiem to Health Centers staff": "Data Manager or CEHO Supervisor and Head of Health Center",
-  "Provide Mineral water to participants": "Refreshments",
-  "Transport fees for remote distance based HCs staff": "Follow the District Council Decision/Hospital Health Committee Meeting resolution on Transport tariffs per District",
-  "Bank Charges": "Financial Services",
-  
-  // Program Management
-  "Running costs": "Mission fees while for report submission",
-  
-  // Human Resources - Note: "Running costs" appears in both categories with different meanings
-  // "Supervisor Salary": "Supervision fees for Malaria Supervisor",
-  "DH CHWs supervisors A0": "Staff Salary",
-  "DH Lab technicians": "Staff Salary", 
-  "DH Nurses A1": "Staff Salary",
-  "CHW supervisor, lab techs, 2 Nurses": "Staff Salary"
-};
-
-// Special handling for malaria activities that have context-dependent descriptions
-const getMalariaActivityDescription = (typeOfActivity: string, category: string): string => {
-  if (typeOfActivity === "Running costs") {
-    if (category === "Program Management") {
-      return "Mission fees while for report submission";
-    } else if (category === "Human Resources") {
-      return "Supervision fees for Malaria Supervisor";
-    }
-  }
-  return malariaActivityDescriptionMap[typeOfActivity] || typeOfActivity;
-};
-
-// TB activity mappings - both hospital and health center use same activities for TB
-const tbActivityDescriptionMap: Record<string, string> = {
-  // Human Resources (HR)
-  "Provincial TB Coordinator Salary": "Salaries for the Provincial TB coordinators",
-  "Provincial TB Coordinator Bonus": "TB Provincial Coordinator bonus 2022/2023",
-  
-  // Travel Related Costs (TRC)
-  "Contact Tracing (Perdiem)": "Conduct contacts tracing among TB cases contact by Health Care Providers at HCs (Refreshment or perdiem)",
-  "Contact Tracing (Transport)": "Conduct contacts tracing among TB cases contact by Health Care Providers at HCs (transportation fees)",
-  "Contact Tracing (General)": "Conduct contacts tracing among TB cases contact by Health Care Providers at HCs",
-  "TPT Guidelines Mentoring (Mission)": "Mentor the implementation of the TPT guidelines from DHs to HCs (mission fees)",
-  "TPT Guidelines Mentoring (Transport)": "Mentor the implementation of the TPT guidelines from DHs to HCs (transportation fees)",
-  "HCW Mentorship HC Level (Mission)": "Mentorship of HCW at health center level (mission fees)",
-  "HCW Mentorship HC Level (Transport)": "Mentorship of HCW at health center level (transportation fees)",
-  "HCW Mentorship Community (Mission)": "Mentorship of HCW at community level (mission fees)",
-  "HCW Mentorship Community (Transport)": "Mentorship of HCW at community level (transportation fees)",
-  "Quarterly Evaluation Meetings (Transport)": "Held quarterly evaluation meetings with facilities to cross-check, analyze and use TB data (Transport fees)",
-  "Quarterly Evaluation Meetings (Allowance)": "Held quarterly evaluation meetings with facilities to cross-check, analyze and use TB data (mission allowance)",
-  
-  // Program Administration Costs (PA)
-  "Hospital Running Costs": "Running cost for the hospital",
-  "Bank charges": "Provide running costs for DH",
-  "Office Supplies": "Provide running costs for DH"
-};
-
 export const transformPlanningDataResponse = (
   apiResponse: any,
   facilityId: string | number
@@ -200,60 +67,30 @@ export const transformPlanningDataResponse = (
     };
   }
 
-  // Determine facility type to choose the appropriate activity description map
+  // Get basic info from first item for metadata
   const firstItem = apiResponse.data[0];
   const facilityType = firstItem?.facilityType || (facilityId === '1' || facilityId === 1 ? "hospital" : "health_center");
-  const isHospital = facilityType.toLowerCase() === 'hospital';
   
-  // Determine program type to choose appropriate mappings
-  const projectName = firstItem?.projectName;
-  const isMalariaProgram = projectName.toLowerCase().includes('malaria') || projectName.toLowerCase().includes('mal');
-  const isTbProgram = projectName.toLowerCase().includes('tb') || projectName.toLowerCase().includes('tuberculosis');
-  
-  // Choose the right mappings based on program
-  let categoryNameMap: Record<string, string>;
-  let activityDescriptionMap: Record<string, string>;
-  
-  if (isTbProgram) {
-    categoryNameMap = tbCategoryNameMap;
-    activityDescriptionMap = tbActivityDescriptionMap;
-  } else if (isMalariaProgram) {
-    categoryNameMap = malariaCategoryNameMap;
-    activityDescriptionMap = malariaActivityDescriptionMap;
-  } else {
-    // Default to HIV
-    categoryNameMap = hivCategoryNameMap;
-    activityDescriptionMap = isHospital ? hivHospitalActivityDescriptionMap : hivHealthCenterActivityDescriptionMap;
-  }
-
-  console.log('🐛 Transform - Program Detection:', {
-    projectName,
-    isMalariaProgram,
-    isTbProgram,
-    isHospital,
-    categoryMapKeys: Object.keys(categoryNameMap),
-    activityMapKeys: Object.keys(activityDescriptionMap).slice(0, 5) // First 5 for debugging
+  console.log('🐛 Transform - API Data:', {
+    dataLength: apiResponse.data.length,
+    firstItem: {
+      categoryName: firstItem?.categoryName,
+      activityName: firstItem?.activityName,
+      projectName: firstItem?.projectName,
+      facilityType: firstItem?.facilityType
+    }
   });
 
   // Transform the planning data into the format expected by the frontend
   const activities: Activity[] = apiResponse.data.map((item: any) => {
-    const apiCategoryName = item.categoryName || '';
-    const mappedCategoryName = categoryNameMap[apiCategoryName] || apiCategoryName;
-    const typeOfActivity = item.activityName || '';
-    
-    // Use appropriate activity description mapping based on program
-    let activityDescription: string;
-    if (isMalariaProgram) {
-      activityDescription = getMalariaActivityDescription(typeOfActivity, apiCategoryName);
-    } else {
-      // For TB and HIV programs, use direct mapping
-      activityDescription = activityDescriptionMap[typeOfActivity] || typeOfActivity;
-    }
+    // Use the API data directly - no need for hardcoded mappings anymore
+    const categoryName = item.categoryName || '';
+    const activityName = item.activityName || '';
     
     return {
-      activityCategory: mappedCategoryName,
-      typeOfActivity: typeOfActivity,
-      activity: activityDescription, // Use the mapped activity description
+      activityCategory: categoryName,
+      typeOfActivity: activityName,
+      activity: activityName, // Use activityName as the description
       frequency: item.frequency ? parseFloat(item.frequency) : undefined,
       unitCost: item.unitCost ? parseFloat(item.unitCost) : undefined,
       countQ1: item.countQ1 || 0,
@@ -267,7 +104,7 @@ export const transformPlanningDataResponse = (
       totalBudget: parseFloat(item.totalBudget) || 0,
       comment: item.comment || '',
       planningActivityId: item.activityId,
-      planningDataId: item.planningDataId, // ← Add the actual planning data ID
+      planningDataId: item.planningDataId,
     };
   });
 

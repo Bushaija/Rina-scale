@@ -1,14 +1,11 @@
 import { useMemo, useState, useEffect } from 'react';
 import { useForm, Resolver } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { 
-  Activity, 
-  Plan, 
-  generateDefaultActivities,
-  planSchema,
-} from '@/features/planning/schema/hiv/plan-form-schema';
-import { HOSPITAL_ACTIVITIES } from '@/features/planning/constants/hiv/hospitals-activities';
-import { HEALTH_CENTER_ACTIVITIES } from '@/features/planning/constants/hiv/health-centers-activities';
+import { planSchema } from '@/features/planning/schema/hiv/plan-form-schema';
+import type { Activity, Plan } from '@/features/planning/schema/hiv/plan-form-schema';
+
+import { useDefaultActivities } from '@/features/planning/hooks/use-default-activities';
+import { useCategorizedActivities } from '@/features/planning-config/api/use-planning-activities';
 
 interface UsePlanFormProps {
   isHospital?: boolean;
@@ -19,15 +16,23 @@ export function usePlanForm({
   isHospital = false, 
   initialActivities 
 }: UsePlanFormProps) {
-  const activityCategories = isHospital ? HOSPITAL_ACTIVITIES : HEALTH_CENTER_ACTIVITIES;
+  const facilityType: 'hospital' | 'health_center' = isHospital ? 'hospital' : 'health_center';
 
-  const [expandedCategories, setExpandedCategories] = useState<Record<string, boolean>>(() => {
-    const expanded: Record<string, boolean> = {};
-    Object.keys(activityCategories).forEach(category => {
-      expanded[category] = true;
-    });
-    return expanded;
-  });
+  // Fetch default activities & category map from API
+  const defaultActivities = useDefaultActivities('HIV', facilityType);
+  const { activityCategories } = useCategorizedActivities('HIV', facilityType);
+
+  // Manage UI expansion per category
+  const [expandedCategories, setExpandedCategories] = useState<Record<string, boolean>>({});
+
+  // Initialize expansion state when categories load
+  useEffect(() => {
+    if (activityCategories && Object.keys(activityCategories).length > 0) {
+      const expanded: Record<string, boolean> = {};
+      Object.keys(activityCategories).forEach((cat) => (expanded[cat] = true));
+      setExpandedCategories(expanded);
+    }
+  }, [activityCategories]);
 
   const toggleCategory = (category: string) => {
     setExpandedCategories(prev => ({
@@ -39,7 +44,7 @@ export function usePlanForm({
   const form = useForm<Plan>({
     resolver: zodResolver(planSchema) as Resolver<Plan>,
     defaultValues: {
-      activities: initialActivities || generateDefaultActivities(isHospital),
+      activities: initialActivities && initialActivities.length > 0 ? initialActivities : defaultActivities,
       generalTotalBudget: 0
     }
   });
@@ -66,7 +71,18 @@ export function usePlanForm({
       });
     }
   }, [initialActivities, reset]);
+  
   const activities = watch('activities');
+  
+  // If no initialActivities provided and API-driven defaultActivities arrived later, reset form
+  useEffect(() => {
+    if ((!initialActivities || initialActivities.length === 0) && defaultActivities.length > 0 && activities.length === 0) {
+      reset({
+        activities: defaultActivities as any,
+        generalTotalBudget: 0,
+      });
+    }
+  }, [defaultActivities, initialActivities, activities.length, reset]);
 
   useEffect(() => {
     const total = activities.reduce((sum, activity) => sum + (activity.totalBudget || 0), 0);
@@ -101,7 +117,7 @@ export function usePlanForm({
 
   const categoryTotals = useMemo(() => {
     const totals: Record<string, { amountQ1: number; amountQ2: number; amountQ3: number; amountQ4: number; totalBudget: number; }> = {};
-    Object.keys(activityCategories).forEach(category => {
+    Object.keys(activityCategories || {}).forEach(category => {
       const categoryActivities = categorizedActivities[category] || [];
       totals[category] = {
         amountQ1: categoryActivities.reduce((sum, act) => sum + (act.amountQ1 || 0), 0),

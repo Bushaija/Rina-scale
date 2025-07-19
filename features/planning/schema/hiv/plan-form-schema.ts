@@ -1,6 +1,5 @@
 import { z } from "zod";
-import { HEALTH_CENTER_ACTIVITIES } from '@/features/planning/constants/hiv/health-centers-activities';
-import { HOSPITAL_ACTIVITIES } from '@/features/planning/constants/hiv/hospitals-activities';
+// Note: constants moved to centralized API. Keep placeholder type.
 
 // Base schema for a single activity row
 const baseActivitySchema = z.object({
@@ -66,7 +65,7 @@ export type Plan = z.infer<typeof planSchema>;
 
 
 // Export both activity categories for use
-export const ACTIVITY_CATEGORIES = HEALTH_CENTER_ACTIVITIES;
+export const ACTIVITY_CATEGORIES: Record<string, any> = {};
 
 // Helper to create a skeleton activity
 export const createEmptyActivity = (
@@ -131,7 +130,7 @@ export const calculateTotalBudget = (activity: Activity): number => {
 // Generate default activities for a new plan
 export const generateDefaultActivities = (isHospital = false): Activity[] => {
   const activities: Activity[] = [];
-  const categoriesSource = isHospital ? HOSPITAL_ACTIVITIES : HEALTH_CENTER_ACTIVITIES;
+  const categoriesSource: Record<string, { activity: string; typeOfActivity: string }[]> = {};
 
   Object.entries(categoriesSource).forEach(([category, entries]) => {
     (entries as { activity: string; typeOfActivity: string }[]).forEach(entry => {

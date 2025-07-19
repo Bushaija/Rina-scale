@@ -37,8 +37,9 @@ export default function ViewPlanPage() {
   // Use recordId if available, fallback to facilityId for backward compatibility
   const idToUse = recordId || facilityId;
   
-  // Map project codes to consistent program names for API
-  const programFilter = program?.toLowerCase() || undefined;
+  // Convert URL program code (HIV, MAL, TB) to canonical program names for API (hiv, malaria, tb)
+  const codeToNameMap: Record<string, string> = { HIV: 'hiv', MAL: 'malaria', TB: 'tb' };
+  const programFilter = program ? codeToNameMap[program.toUpperCase()] : undefined;
   
   const { 
     data: planData, 
@@ -109,7 +110,7 @@ export default function ViewPlanPage() {
             initialActivities={planData.activities}
             metadata={{
               ...planData.metadata,
-              program: planData.metadata.program || 'HIV', // Always use API program, ignore URL param
+              program: planData.metadata.program, // Always use API program, ignore URL param
               facilityName: facilityName || planData.metadata.facilityName || 'Unknown Facility'
             }}
             isHospital={facilityType === 'hospital' || facilityType === 'Hospital' || planData.metadata.facilityType?.toLowerCase() === 'hospital'}

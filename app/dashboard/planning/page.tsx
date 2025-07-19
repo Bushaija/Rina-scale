@@ -12,17 +12,15 @@ import { useGetPlannedFacilities } from "@/features/planned-facilities/api/use-g
 import { PlanRecord } from "@/features/planning/components/plan-listing-table"
 import { useListProjects, type Project } from "@/features/projects/use-list-projects"
 
-
 const facilityTypes = [
   { id: "hospital", label: "Hospital" },
   { id: "health_center", label: "Health Center" },
 ]
 
   
-
 export default function PlanningPage() {
   const router = useRouter()
-  const [dialogOpen, setDialogOpen] = useState(false)
+  const [dialogOpen, setDialogOpen] = useState(false) 
   
   // Access session data in client component
   const { data: session, isPending } = authClient.useSession();
@@ -32,16 +30,14 @@ export default function PlanningPage() {
   const { data: projectsResponse, isLoading: isProjectsLoading } = useListProjects({ status: "ACTIVE" });
   const projectData: Project[] = projectsResponse?.data || [];
 
-  console.log("projectData:: ", projectData)
-
   // Helper to derive URL program name from a project row
   const getProgramName = (project: Project): string => {
     const n = project.name.toLowerCase();
 
-    if (n.includes('malaria') || project.code === 'MAL') return 'malaria';
-    if (n.includes('tuberculosis') || project.code === 'TB') return 'tb';
+    if (n.includes('malaria') || project.code === 'MAL') return 'MAL';
+    if (n.includes('tuberculosis') || project.code === 'TB') return 'TB';
 
-    return 'hiv'; // default
+    return 'HIV'; // default
   };
 
   // Create dynamic programs list from projects data
@@ -62,14 +58,15 @@ export default function PlanningPage() {
   };
 
   const mapProjectCodeToProgram = (code?: string): string => {
-    if (!code) return 'hiv';
+    console.log("code:: ", code)
+    if (!code) return 'HIV';
     switch (code) {
       case 'MAL':
-        return 'malaria';
+        return 'MAL';
       case 'TB':
-        return 'tb';
+        return 'TB';
       default:
-        return 'hiv';
+        return 'HIV';
     }
   };
 
@@ -152,19 +149,10 @@ export default function PlanningPage() {
     // Find the record to get more context
     const record = tableData.find(r => r.id === id);
 
-    console.log("record:: ", record)
-    
     // Use dynamic project code mapping
     const programName = mapProjectCodeToProgram(projectCode);
     const programParam = programName ? `&program=${programName}` : '';
     const facilityNameParam = record?.facilityName ? `&facilityName=${encodeURIComponent(record.facilityName)}` : '';
-
-    console.log('🔧 HandleView - Dynamic Project Mapping:', {
-      recordId: id,
-      projectCode: record?.projectCode,
-      mappedProgram: programName,
-      availableProjects: projectData.length
-    });
     
     router.push(`/dashboard/planning/view?recordId=${id}&facilityType=${facilityType}${programParam}${facilityNameParam}`)
   }

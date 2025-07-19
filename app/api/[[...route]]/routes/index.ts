@@ -23,6 +23,7 @@ import statements from "./statements/statements.index";
 import planningActivities from "./planning-activities/planning-activities.index";
 import planningData from "./planning-data/planning-data.index";
 import plannedFacilities from "./planned-facilities/planned-facilities.index";
+import planningConfig from "./planning-config/planning-config.index";
 
 export function registerRoutes(app: AppOpenAPI) {
     return app
@@ -50,6 +51,7 @@ export function registerRoutes(app: AppOpenAPI) {
         .route('/', planningActivities)
         .route('/', planningData)
         .route('/', plannedFacilities)
+        .route('/', planningConfig)
         .route('/', reports);
 };
 

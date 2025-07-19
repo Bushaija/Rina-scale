@@ -169,6 +169,8 @@ export const transformPlanningDataResponse = (
             comment: savedData.comment || '',
             planningActivityId: activity.id,
             planningDataId: savedData.planningDataId,
+            facilityId: savedData.facilityId,
+            reportingPeriodId: savedData.reportingPeriodId,
           };
         } else {
           // Activity was not saved - create with default values
@@ -190,6 +192,8 @@ export const transformPlanningDataResponse = (
             comment: '',
             planningActivityId: activity.id,
             planningDataId: undefined, // No saved data for this activity
+            facilityId: firstItem?.facilityId || facilityId,
+            reportingPeriodId: firstItem?.reportingPeriodId || 1,
           };
         }
       });
@@ -217,6 +221,8 @@ export const transformPlanningDataResponse = (
         comment: item.comment || '',
         planningActivityId: item.activityId,
         planningDataId: item.planningDataId,
+        facilityId: item.facilityId,
+        reportingPeriodId: item.reportingPeriodId,
       };
     });
   }

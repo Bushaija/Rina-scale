@@ -31,6 +31,8 @@ const baseActivitySchema = z.object({
   comment: z.string().max(1000, { message: "Comment must be at most 1000 characters" }).optional(),
   planningActivityId: z.number().int().positive().optional(),
   planningDataId: z.number().int().positive().optional(),
+  facilityId: z.number().int().positive().optional(),
+  reportingPeriodId: z.number().int().positive().optional(),
 });
 
 export const activitySchema = baseActivitySchema;

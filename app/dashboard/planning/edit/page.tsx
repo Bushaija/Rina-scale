@@ -6,6 +6,7 @@ import { PlanForm } from '@/features/planning/components/plan-form';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { useGetPlanDataByFacilityId } from '@/features/planning-data/api/use-get-planning-by-facility-id';
 import { useUpdatePlanningData } from '@/features/planning-data/api/use-update-planning-data';
+import { useCreatePlanningData } from '@/features/planning-data/api/use-create-planning-data';
 import { toast } from 'sonner';
 import { Plan } from '@/features/planning/schema/hiv/plan-form-schema';
 // Import other plan types for type flexibility
@@ -43,6 +44,7 @@ export default function EditPlanPage() {
   });
 
   const updatePlanningData = useUpdatePlanningData();
+  const createPlanningData = useCreatePlanningData();
 
   // Debug logging for planData changes
   React.useEffect(() => {
@@ -69,25 +71,43 @@ export default function EditPlanPage() {
     }
 
     try {
-      // Include every activity that has a planningDataId – counts or comments may have changed
-      const updateRows = plan.activities.filter((activity) => activity.planningDataId);
+      // Separate activities into existing (to update) and new (to create)
+      const activitiesToUpdate = plan.activities.filter((activity) => activity.planningDataId);
+      const activitiesToCreate = plan.activities.filter((activity) => !activity.planningDataId);
 
-      if (updateRows.length === 0) {
-        toast.warning("Nothing to update – no valid activities found.");
+      // Filter out activities with no meaningful data (all zeros)
+      const hasMeaningfulData = (activity: any) => {
+        return (
+          (Number(activity.frequency) || 0) > 0 ||
+          (Number(activity.unitCost) || 0) > 0 ||
+          (Number(activity.countQ1) || 0) > 0 ||
+          (Number((activity as any).countQ2) || 0) > 0 ||
+          (Number((activity as any).countQ3) || 0) > 0 ||
+          (Number((activity as any).countQ4) || 0) > 0 ||
+          (activity.comment || "").trim() !== ""
+        );
+      };
+
+      const meaningfulActivitiesToCreate = activitiesToCreate.filter(hasMeaningfulData);
+
+      const totalOperations = activitiesToUpdate.length + meaningfulActivitiesToCreate.length;
+
+      if (totalOperations === 0) {
+        toast.warning("Nothing to update – no activities with meaningful data found.");
         return;
       }
 
-      const totalRows = updateRows.length;
       const toastId = toast.loading("Preparing to update plan…", {
-        description: `0 of ${totalRows} activities`,
+        description: `0 of ${totalOperations} activities`,
       });
 
       let successCount = 0;
       let failureCount = 0;
+      let operationIndex = 0;
 
-      // Sequentially update each activity so we can show progress
-      for (let i = 0; i < totalRows; i++) {
-        const activity = updateRows[i];
+      // First, update existing activities
+      for (let i = 0; i < activitiesToUpdate.length; i++) {
+        const activity = activitiesToUpdate[i];
         try {
           await updatePlanningData.mutateAsync({
             id: activity.planningDataId!,
@@ -106,10 +126,41 @@ export default function EditPlanPage() {
           console.error(`Failed to update activity ${activity.typeOfActivity}:`, error);
           failureCount++;
         } finally {
-          const percent = Math.round(((i + 1) / totalRows) * 100);
+          operationIndex++;
+          const percent = Math.round((operationIndex / totalOperations) * 100);
           toast.loading(`Updating plan… ${percent}%`, {
             id: toastId,
-            description: `${i + 1} of ${totalRows} activities`,
+            description: `${operationIndex} of ${totalOperations} activities`,
+          });
+        }
+      }
+
+      // Then, create new activities
+      for (let i = 0; i < meaningfulActivitiesToCreate.length; i++) {
+        const activity = meaningfulActivitiesToCreate[i];
+        try {
+          await createPlanningData.mutateAsync({
+            planningActivityId: activity.planningActivityId,
+            facilityId: activity.facilityId,
+            reportingPeriodId: activity.reportingPeriodId,
+            frequency: Number(activity.frequency) || 0,
+            unitCost: Number(activity.unitCost) || 0,
+            countQ1: Number(activity.countQ1) || 0,
+            countQ2: Number((activity as any).countQ2) || 0,
+            countQ3: Number((activity as any).countQ3) || 0,
+            countQ4: Number((activity as any).countQ4) || 0,
+            comment: activity.comment || "",
+          });
+          successCount++;
+        } catch (error) {
+          console.error(`Failed to create activity ${activity.typeOfActivity}:`, error);
+          failureCount++;
+        } finally {
+          operationIndex++;
+          const percent = Math.round((operationIndex / totalOperations) * 100);
+          toast.loading(`Updating plan… ${percent}%`, {
+            id: toastId,
+            description: `${operationIndex} of ${totalOperations} activities`,
           });
         }
       }
@@ -117,7 +168,7 @@ export default function EditPlanPage() {
       if (failureCount === 0) {
         toast.success("🎉 Plan updated successfully!", {
           id: toastId,
-          description: `${successCount} activities updated`,
+          description: `${successCount} activities processed (${activitiesToUpdate.length} updated, ${meaningfulActivitiesToCreate.length} created)`,
         });
 
         // Allow users to see success message briefly before redirect

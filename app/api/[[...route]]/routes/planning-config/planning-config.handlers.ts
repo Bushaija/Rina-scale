@@ -252,7 +252,11 @@ export const createActivityConfiguration: AppRouteHandler<any> = async (c) => {
 
       // Create categories
       for (const category of body.categories) {
-        const categoryId = Date.now() + Math.floor(Math.random() * 1000); // Simple ID generation
+        // Get next category ID using a sequence or simple counter
+        const maxCategoryIdResult = await tx
+          .select({ maxCategoryId: sql<number>`COALESCE(MAX(category_id), 0)` })
+          .from(scalabilitySchema.planningCategoryVersions);
+        const categoryId = (maxCategoryIdResult[0]?.maxCategoryId || 0) + 1;
         
         const [insertedCategory] = await tx
           .insert(scalabilitySchema.planningCategoryVersions)
@@ -272,7 +276,11 @@ export const createActivityConfiguration: AppRouteHandler<any> = async (c) => {
 
         // Create activities for this category
         for (const activity of category.activities) {
-          const activityId = Date.now() + Math.floor(Math.random() * 1000); // Simple ID generation
+          // Get next activity ID using a sequence or simple counter
+          const maxActivityIdResult = await tx
+            .select({ maxActivityId: sql<number>`COALESCE(MAX(activity_id), 0)` })
+            .from(scalabilitySchema.planningActivityVersions);
+          const activityId = (maxActivityIdResult[0]?.maxActivityId || 0) + 1;
           
           await tx
             .insert(scalabilitySchema.planningActivityVersions)
@@ -774,4 +782,121 @@ export const publishActivityConfiguration: AppRouteHandler<any> = async (c) => {
     publishedVersion: 1,
     activatedAt: new Date().toISOString()
   }, HttpStatusCodes.OK);
+}; 
+
+/**
+ * Handler for creating individual activities in existing categories
+ */
+export const createIndividualActivity: AppRouteHandler<any> = async (c) => {
+  const body = (c as any).req.valid("json");
+  
+  try {
+    // Resolve project ID from code if needed
+    let projectId = body.projectId;
+    if (!projectId && body.projectCode) {
+      const project = await db.query.projects.findFirst({
+        where: eq(schema.projects.code, body.projectCode),
+        columns: { id: true }
+      });
+      if (!project) {
+        return c.json({ 
+          error: "NOT_FOUND", 
+          message: `Project with code "${body.projectCode}" not found` 
+        }, HttpStatusCodes.NOT_FOUND);
+      }
+      projectId = project.id;
+    }
+
+    // Find the category by code
+    const category = await db
+      .select()
+      .from(scalabilitySchema.planningCategoryVersions)
+      .where(
+        and(
+          eq(scalabilitySchema.planningCategoryVersions.projectId, projectId),
+          eq(scalabilitySchema.planningCategoryVersions.facilityType, body.facilityType),
+          eq(scalabilitySchema.planningCategoryVersions.code, body.activity.categoryCode),
+          isNull(scalabilitySchema.planningCategoryVersions.validTo)
+        )
+      )
+      .limit(1);
+
+    if (category.length === 0) {
+      return c.json({
+        error: "NOT_FOUND",
+        message: `Category "${body.activity.categoryCode}" not found for project ${projectId} and facility type ${body.facilityType}`
+      }, HttpStatusCodes.NOT_FOUND);
+    }
+
+    const categoryVersion = category[0];
+
+    // Check if activity already exists with same name in this category
+    const existingActivity = await db
+      .select({ id: scalabilitySchema.planningActivityVersions.id })
+      .from(scalabilitySchema.planningActivityVersions)
+      .where(
+        and(
+          eq(scalabilitySchema.planningActivityVersions.categoryVersionId, categoryVersion.id),
+          eq(scalabilitySchema.planningActivityVersions.name, body.activity.name),
+          isNull(scalabilitySchema.planningActivityVersions.validTo)
+        )
+      )
+      .limit(1);
+
+    if (existingActivity.length > 0) {
+      return c.json({
+        error: "CONFLICT",
+        message: `Activity "${body.activity.name}" already exists in category "${body.activity.categoryCode}"`
+      }, HttpStatusCodes.CONFLICT);
+    }
+
+    // Create the new activity
+    const activityId = Date.now() + Math.floor(Math.random() * 1000); // Simple ID generation
+    
+    const [newActivity] = await db
+      .insert(scalabilitySchema.planningActivityVersions)
+      .values({
+        activityId,
+        version: categoryVersion.version,
+        templateId: body.activity.templateId || null,
+        categoryVersionId: categoryVersion.id,
+        facilityType: body.facilityType,
+        name: body.activity.name,
+        displayOrder: body.activity.displayOrder,
+        isTotalRow: body.activity.isTotalRow || false,
+        config: body.activity.config || null,
+        defaultFrequency: body.activity.defaultFrequency || null,
+        defaultUnitCost: body.activity.defaultUnitCost || null,
+        changeReason: body.activity.changeReason || 'New activity added',
+      })
+      .returning();
+
+    c.get("logger")?.info("Individual activity created", {
+      activityId: newActivity.id,
+      projectId,
+      facilityType: body.facilityType,
+      categoryCode: body.activity.categoryCode,
+      activityName: body.activity.name
+    });
+
+    return c.json({
+      message: "Activity created successfully",
+      activity: {
+        id: newActivity.id,
+        name: newActivity.name,
+        categoryCode: body.activity.categoryCode,
+        displayOrder: newActivity.displayOrder,
+        isTotalRow: newActivity.isTotalRow,
+        defaultFrequency: newActivity.defaultFrequency,
+        defaultUnitCost: newActivity.defaultUnitCost,
+      }
+    }, HttpStatusCodes.CREATED);
+
+  } catch (error) {
+    console.error("Error creating individual activity:", error);
+    return c.json({
+      error: "INTERNAL_SERVER_ERROR",
+      message: "Failed to create activity"
+    }, HttpStatusCodes.INTERNAL_SERVER_ERROR);
+  }
 }; 

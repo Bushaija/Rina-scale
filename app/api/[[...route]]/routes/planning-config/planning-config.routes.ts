@@ -293,6 +293,69 @@ export const getActivitiesByTemplate = createRoute({
   tags: planningConfigTags,
 });
 
+// POST /planning-config/activities/individual - Create individual activity
+const CreateIndividualActivitySchema = z.object({
+  projectId: z.number().int().optional(),
+  projectCode: z.string().optional(),
+  facilityType: z.enum(["hospital", "health_center"]),
+  activity: z.object({
+    name: z.string().min(1, "Activity name is required"),
+    description: z.string().optional(),
+    categoryCode: z.string().min(1, "Category code is required"),
+    displayOrder: z.number().int().min(1),
+    isTotalRow: z.boolean().default(false),
+    templateId: z.number().int().optional(),
+    config: z.record(z.any()).optional(),
+    defaultFrequency: z.number().optional(),
+    defaultUnitCost: z.number().optional(),
+    changeReason: z.string().optional(),
+  }),
+});
+
+export const createIndividualActivity = createRoute({
+  method: "post",
+  path: "/planning-config/activity",
+  request: {
+    body: {
+      content: {
+        "application/json": {
+          schema: CreateIndividualActivitySchema,
+        },
+      },
+    },
+  },
+  responses: {
+    [HttpStatusCodes.CREATED]: jsonContent(
+      z.object({ 
+        message: z.string(),
+        activity: z.object({
+          id: z.number().int(),
+          name: z.string(),
+          categoryCode: z.string(),
+          displayOrder: z.number().int(),
+          isTotalRow: z.boolean(),
+          defaultFrequency: z.number().nullable(),
+          defaultUnitCost: z.number().nullable(),
+        }),
+      }),
+      "Individual activity created successfully"
+    ),
+    [HttpStatusCodes.BAD_REQUEST]: jsonContent(
+      z.object({ error: z.string(), message: z.string() }),
+      "Invalid input data"
+    ),
+    [HttpStatusCodes.NOT_FOUND]: jsonContent(
+      z.object({ error: z.string(), message: z.string() }),
+      "Project or category not found"
+    ),
+    [HttpStatusCodes.CONFLICT]: jsonContent(
+      z.object({ error: z.string(), message: z.string() }),
+      "Activity already exists in this category"
+    ),
+  },
+  tags: planningConfigTags,
+});
+
 // Admin routes for project management
 const ProjectIdParamSchema = z.object({
   projectId: z.string().regex(/^\d+$/, "Project ID must be a valid number").transform(Number),
@@ -429,6 +492,7 @@ export const publishActivityConfiguration = createRoute({
 
 export type GetActivityStructureRoute = typeof getActivityStructure;
 export type CreateActivityConfigurationRoute = typeof createActivityConfiguration;
+export type CreateIndividualActivityRoute = typeof createIndividualActivity;
 export type GetActivityTemplatesRoute = typeof getActivityTemplates;
 export type CreateActivityTemplateRoute = typeof createActivityTemplate;
 export type UpdateActivityTemplateRoute = typeof updateActivityTemplate;

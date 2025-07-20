@@ -90,13 +90,13 @@ const programActivities: Record<string, PlanningActivityData[]> = {
     { facilityType: 'hospital', categoryCode: 'HR', name: 'DH CHWs supervisors A0', displayOrder: 1 },
     { facilityType: 'hospital', categoryCode: 'HR', name: 'DH Lab technicians', displayOrder: 2 },
     { facilityType: 'hospital', categoryCode: 'HR', name: 'DH Nurses A1', displayOrder: 3 },
-    { facilityType: 'hospital', categoryCode: 'HR', name: 'CHW supervisor, lab techs, 2 Nurses', displayOrder: 4 },
+    { facilityType: 'hospital', categoryCode: 'HR', name: 'Provide Bonus', displayOrder: 4 },
     
     // { facilityType: 'health_center', categoryCode: 'HR', name: 'Supervisor Salary', displayOrder: 1 },
     { facilityType: 'health_center', categoryCode: 'HR', name: 'DH CHWs supervisors A0', displayOrder: 1 },
     { facilityType: 'health_center', categoryCode: 'HR', name: 'DH Lab technicians', displayOrder: 2 },
     { facilityType: 'health_center', categoryCode: 'HR', name: 'DH Nurses A1', displayOrder: 3 },
-    { facilityType: 'health_center', categoryCode: 'HR', name: 'CHW supervisor, lab techs, 2 Nurses', displayOrder: 4 },
+    { facilityType: 'health_center', categoryCode: 'HR', name: 'Provide Bonus', displayOrder: 4 },
     
   ],
 

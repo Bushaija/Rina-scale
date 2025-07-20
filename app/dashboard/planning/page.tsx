@@ -12,10 +12,18 @@ import { useGetPlannedFacilities } from "@/features/planned-facilities/api/use-g
 import { PlanRecord } from "@/features/planning/components/plan-listing-table"
 import { useListProjects, type Project } from "@/features/projects/use-list-projects"
 
-const facilityTypes = [
-  { id: "hospital", label: "Hospital" },
-  { id: "health_center", label: "Health Center" },
-]
+// Define facility types for each program
+const getFacilityTypesForProgram = (program?: string) => {
+  if (program === 'TB') {
+    // TB only applies to hospitals
+    return [{ id: "hospital", label: "Hospital" }];
+  }
+  // HIV and Malaria apply to both hospitals and health centers
+  return [
+    { id: "hospital", label: "Hospital" },
+    { id: "health_center", label: "Health Center" },
+  ];
+};
 
   
 export default function PlanningPage() {
@@ -46,16 +54,16 @@ export default function PlanningPage() {
     name: project.name
   }));
 
-  // Create dynamic mapping from project code to program name (for URL params)
-  const createProjectCodeMapping = () => {
-    const mapping: Record<string, string> = {};
-    projectData.forEach(project => {
-      if (project.code) {
-        mapping[project.code] = getProgramName(project);
-      }
-    });
-    return mapping;
-  };
+  // // Create dynamic mapping from project code to program name (for URL params)
+  // const createProjectCodeMapping = () => {
+  //   const mapping: Record<string, string> = {};
+  //   projectData.forEach(project => {
+  //     if (project.code) {
+  //       mapping[project.code] = getProgramName(project);
+  //     }
+  //   });
+  //   return mapping;
+  // };
 
   const mapProjectCodeToProgram = (code?: string): string => {
     console.log("code:: ", code)
@@ -189,7 +197,7 @@ export default function PlanningPage() {
         <NewPlanDialog
           programs={programs}
           facilities={facilities}
-          facilityTypes={facilityTypes}
+          getFacilityTypes={getFacilityTypesForProgram}
           onCreatePlan={handleCreatePlan}
           open={dialogOpen}
           onOpenChange={setDialogOpen}

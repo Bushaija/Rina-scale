@@ -76,8 +76,7 @@ export function PlanForm({
   const [isTempSaving, setIsTempSaving] = useState(false);
   const [showRestoreBanner, setShowRestoreBanner] = useState(false);
 
-  const router = useRouter();
-  const { showSuccessToast, showErrorToast } = useAppToast();
+  const { showErrorToast } = useAppToast();
   const { execute: executeSubmit, isLoading: isSubmitting } = useAsync(submitPlan);
 
   // Build metadata for temp save

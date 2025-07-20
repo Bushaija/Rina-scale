@@ -6,6 +6,7 @@ import * as routes from "./planning-config.routes";
 const router = createRouter()
   .openapi(routes.getActivityStructure, handlers.getActivityStructure)
   .openapi(routes.createActivityConfiguration, handlers.createActivityConfiguration)
+  .openapi(routes.createIndividualActivity, handlers.createIndividualActivity)
   .openapi(routes.getActivityTemplates, handlers.getActivityTemplates)
   .openapi(routes.createActivityTemplate, handlers.createActivityTemplate)
   .openapi(routes.updateActivityTemplate, handlers.updateActivityTemplate)

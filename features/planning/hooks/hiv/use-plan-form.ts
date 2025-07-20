@@ -28,7 +28,7 @@ export function usePlanForm({
   // Initialize expansion state when categories load
   useEffect(() => {
     if (activityCategories && Object.keys(activityCategories).length > 0) {
-      const expanded: Record<string, boolean> = {};
+    const expanded: Record<string, boolean> = {};
       Object.keys(activityCategories).forEach((cat) => (expanded[cat] = true));
       setExpandedCategories(expanded);
     }

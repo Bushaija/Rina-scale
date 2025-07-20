@@ -39,7 +39,7 @@ interface FacilityType {
 interface NewPlanDialogProps {
   programs: Program[]
   facilities: Facility[]
-  facilityTypes: FacilityType[]
+  getFacilityTypes: (program?: string) => FacilityType[]
   onCreatePlan: (facilityName: string, facilityType: string, program?: string) => void
   open?: boolean
   onOpenChange?: (open: boolean) => void
@@ -49,7 +49,7 @@ interface NewPlanDialogProps {
 export function NewPlanDialog({
   programs,
   facilities,
-  facilityTypes,
+  getFacilityTypes,
   onCreatePlan,
   open,
   onOpenChange,
@@ -58,6 +58,9 @@ export function NewPlanDialog({
   const [selectedProgram, setSelectedProgram] = useState("")
   const [selectedFacility, setSelectedFacility] = useState("")
   const [selectedType, setSelectedType] = useState("")
+
+  // Get facility types based on selected program
+  const availableFacilityTypes = getFacilityTypes(selectedProgram);
 
   // Filter facilities based on selected type and program availability
   const filteredFacilities = facilities.filter((f) => {
@@ -109,6 +112,11 @@ export function NewPlanDialog({
               onValueChange={(value: string) => {
                 setSelectedProgram(value)
                 setSelectedFacility("")
+                // Reset facility type if the new program doesn't support it
+                const newFacilityTypes = getFacilityTypes(value);
+                if (!newFacilityTypes.find(type => type.id === selectedType)) {
+                  setSelectedType("");
+                }
               }}
             >
               <SelectTrigger id="type" className="w-full">
@@ -137,7 +145,7 @@ export function NewPlanDialog({
                 <SelectValue placeholder="Select facility type" />
               </SelectTrigger>
               <SelectContent>
-                {facilityTypes.map((type) => (
+                {availableFacilityTypes.map((type) => (
                   <SelectItem key={type.id} value={type.id}>
                     {type.label}
                   </SelectItem>

@@ -5,4 +5,4 @@ export type ActivityEntry = {
   
   export type ActivityCategoryType = {
   [categoryName: string]: ActivityEntry[] | { code: string; name: string; displayOrder: number; };
-};
+  };

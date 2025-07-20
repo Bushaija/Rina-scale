@@ -26,7 +26,7 @@ export function usePlanForm({
 
   useEffect(() => {
     if (activityCategories && Object.keys(activityCategories).length > 0) {
-      const expanded: Record<string, boolean> = {};
+    const expanded: Record<string, boolean> = {};
       Object.keys(activityCategories).forEach((cat) => (expanded[cat] = true));
       setExpandedCategories(expanded);
     }
@@ -69,7 +69,7 @@ export function usePlanForm({
         generalTotalBudget: totalBudget
       });
     }
-    }, [initialActivities, reset]);
+  }, [initialActivities, reset]);
   
   const activities = watch('activities');
   

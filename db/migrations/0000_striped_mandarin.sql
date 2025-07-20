@@ -178,6 +178,16 @@ CREATE TABLE "planning_activities" (
 	"project_id" integer NOT NULL
 );
 --> statement-breakpoint
+CREATE TABLE "planning_activity_event_mappings" (
+	"id" serial PRIMARY KEY NOT NULL,
+	"planning_activity_id" integer NOT NULL,
+	"event_id" integer NOT NULL,
+	"mapping_type" varchar(20) DEFAULT 'DIRECT',
+	"created_at" timestamp DEFAULT CURRENT_TIMESTAMP,
+	"updated_at" timestamp DEFAULT CURRENT_TIMESTAMP,
+	CONSTRAINT "planning_activity_event_mappings_activity_id_event_id_key" UNIQUE("planning_activity_id","event_id")
+);
+--> statement-breakpoint
 CREATE TABLE "planning_categories" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"project_id" integer NOT NULL,
@@ -310,6 +320,74 @@ CREATE TABLE "verification" (
 	"updated_at" timestamp
 );
 --> statement-breakpoint
+CREATE TABLE "activity_templates" (
+	"id" serial PRIMARY KEY NOT NULL,
+	"name" varchar(200) NOT NULL,
+	"description" text,
+	"categoryType" varchar(50) NOT NULL,
+	"tags" text[],
+	"isActive" boolean DEFAULT true,
+	"metadata" jsonb,
+	"created_at" timestamp DEFAULT CURRENT_TIMESTAMP,
+	"updated_at" timestamp DEFAULT CURRENT_TIMESTAMP,
+	"created_by" integer,
+	"updated_by" integer,
+	CONSTRAINT "activity_templates_name_category_key" UNIQUE("name","categoryType")
+);
+--> statement-breakpoint
+CREATE TABLE "planning_activity_versions" (
+	"id" serial PRIMARY KEY NOT NULL,
+	"activity_id" integer NOT NULL,
+	"version" integer NOT NULL,
+	"template_id" integer,
+	"category_version_id" integer NOT NULL,
+	"facilityType" varchar(20) NOT NULL,
+	"name" varchar(200) NOT NULL,
+	"display_order" integer NOT NULL,
+	"is_total_row" boolean DEFAULT false,
+	"isActive" boolean DEFAULT true,
+	"valid_from" timestamp DEFAULT CURRENT_TIMESTAMP,
+	"valid_to" timestamp,
+	"config" jsonb,
+	"defaultFrequency" numeric(10, 2),
+	"defaultUnitCost" numeric(18, 2),
+	"changeReason" text,
+	"created_at" timestamp DEFAULT CURRENT_TIMESTAMP,
+	"created_by" integer,
+	CONSTRAINT "planning_activity_versions_unique" UNIQUE("activity_id","version")
+);
+--> statement-breakpoint
+CREATE TABLE "planning_category_versions" (
+	"id" serial PRIMARY KEY NOT NULL,
+	"category_id" integer NOT NULL,
+	"version" integer NOT NULL,
+	"project_id" integer NOT NULL,
+	"facilityType" varchar(20) NOT NULL,
+	"code" varchar(10) NOT NULL,
+	"name" varchar(100) NOT NULL,
+	"display_order" integer NOT NULL,
+	"isActive" boolean DEFAULT true,
+	"valid_from" timestamp DEFAULT CURRENT_TIMESTAMP,
+	"valid_to" timestamp,
+	"changeReason" text,
+	"created_at" timestamp DEFAULT CURRENT_TIMESTAMP,
+	"created_by" integer,
+	CONSTRAINT "planning_category_versions_unique" UNIQUE("category_id","version")
+);
+--> statement-breakpoint
+CREATE TABLE "planning_configuration" (
+	"id" serial PRIMARY KEY NOT NULL,
+	"project_id" integer NOT NULL,
+	"facilityType" varchar(20) NOT NULL,
+	"configKey" varchar(100) NOT NULL,
+	"configValue" jsonb NOT NULL,
+	"description" text,
+	"isActive" boolean DEFAULT true,
+	"created_at" timestamp DEFAULT CURRENT_TIMESTAMP,
+	"updated_at" timestamp DEFAULT CURRENT_TIMESTAMP,
+	CONSTRAINT "planning_config_unique" UNIQUE("project_id","facilityType","configKey")
+);
+--> statement-breakpoint
 ALTER TABLE "account" ADD CONSTRAINT "account_user_id_users_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "activities" ADD CONSTRAINT "activities_category_id_fkey" FOREIGN KEY ("category_id") REFERENCES "public"."categories"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "activities" ADD CONSTRAINT "activities_sub_category_id_fkey" FOREIGN KEY ("sub_category_id") REFERENCES "public"."sub_categories"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
@@ -325,12 +403,11 @@ ALTER TABLE "category_event_mappings" ADD CONSTRAINT "category_event_mappings_ca
 ALTER TABLE "category_event_mappings" ADD CONSTRAINT "category_event_mappings_sub_category_id_fkey" FOREIGN KEY ("sub_category_id") REFERENCES "public"."sub_categories"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "category_event_mappings" ADD CONSTRAINT "category_event_mappings_event_id_fkey" FOREIGN KEY ("event_id") REFERENCES "public"."events"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "districts" ADD CONSTRAINT "districts_province_id_fkey" FOREIGN KEY ("province_id") REFERENCES "public"."provinces"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "execution_data" ADD CONSTRAINT "execution_data_facility_id_fkey" FOREIGN KEY ("facility_id") REFERENCES "public"."facilities"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "execution_data" ADD CONSTRAINT "execution_data_reporting_period_id_fkey" FOREIGN KEY ("reporting_period_id") REFERENCES "public"."reporting_periods"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "execution_data" ADD CONSTRAINT "execution_data_activity_id_fkey" FOREIGN KEY ("activity_id") REFERENCES "public"."activities"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE "execution_data" ADD CONSTRAINT "execution_data_facility_id_fkey" FOREIGN KEY ("facility_id") REFERENCES "public"."facilities"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "execution_data" ADD CONSTRAINT "exec_project_fk" FOREIGN KEY ("project_id") REFERENCES "public"."projects"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "facilities" ADD CONSTRAINT "facilities_district_id_fkey" FOREIGN KEY ("district_id") REFERENCES "public"."districts"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE "financial_events" ADD CONSTRAINT "financial_events_source_execution_data_fk" FOREIGN KEY ("source_id") REFERENCES "public"."execution_data"("id") ON DELETE set null ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "financial_events" ADD CONSTRAINT "financial_events_project_id_fkey" FOREIGN KEY ("project_id") REFERENCES "public"."projects"("id") ON DELETE set null ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "financial_events" ADD CONSTRAINT "financial_events_event_id_fkey" FOREIGN KEY ("event_id") REFERENCES "public"."events"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "financial_events" ADD CONSTRAINT "financial_events_reporting_period_id_fkey" FOREIGN KEY ("reporting_period_id") REFERENCES "public"."reporting_periods"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
@@ -350,6 +427,9 @@ ALTER TABLE "session" ADD CONSTRAINT "session_user_id_users_id_fk" FOREIGN KEY (
 ALTER TABLE "statement_templates" ADD CONSTRAINT "statement_templates_parent_line_id_fkey" FOREIGN KEY ("parent_line_id") REFERENCES "public"."statement_templates"("id") ON DELETE set null ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "sub_categories" ADD CONSTRAINT "sub_categories_category_id_fkey" FOREIGN KEY ("category_id") REFERENCES "public"."categories"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "users" ADD CONSTRAINT "users_facility_id_fkey" FOREIGN KEY ("facility_id") REFERENCES "public"."facilities"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "planning_activity_versions" ADD CONSTRAINT "planning_activity_versions_template_id_fkey" FOREIGN KEY ("template_id") REFERENCES "public"."activity_templates"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "planning_activity_versions" ADD CONSTRAINT "planning_activity_versions_category_version_id_fkey" FOREIGN KEY ("category_version_id") REFERENCES "public"."planning_category_versions"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "planning_category_versions" ADD CONSTRAINT "planning_category_versions_project_id_fkey" FOREIGN KEY ("project_id") REFERENCES "public"."projects"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 CREATE INDEX "idx_budget_alloc_project" ON "budget_allocations" USING btree ("project_id" int4_ops);--> statement-breakpoint
 CREATE UNIQUE INDEX "categories_project_code_uniq" ON "categories" USING btree ("project_id" int4_ops,"code");--> statement-breakpoint
 CREATE UNIQUE INDEX "category_event_unique" ON "category_event_mappings" USING btree (COALESCE(category_id, 0),COALESCE(sub_category_id, 0),event_id);--> statement-breakpoint
@@ -359,4 +439,12 @@ CREATE INDEX "idx_pabm_budget" ON "plan_activity_budget_mappings" USING btree ("
 CREATE INDEX "idx_pabm_plan" ON "plan_activity_budget_mappings" USING btree ("plan_activity_id" int4_ops);--> statement-breakpoint
 CREATE INDEX "idx_plan_act_cat_order" ON "planning_activities" USING btree ("category_id" int4_ops,"display_order" int4_ops);--> statement-breakpoint
 CREATE UNIQUE INDEX "subcat_project_category_code_uniq" ON "sub_categories" USING btree ("project_id" int4_ops,"category_id" int4_ops,"code");--> statement-breakpoint
+CREATE INDEX "idx_activity_templates_category" ON "activity_templates" USING btree ("categoryType");--> statement-breakpoint
+CREATE INDEX "idx_activity_templates_active" ON "activity_templates" USING btree ("isActive");--> statement-breakpoint
+CREATE INDEX "idx_planning_act_versions_active" ON "planning_activity_versions" USING btree ("isActive");--> statement-breakpoint
+CREATE INDEX "idx_planning_act_versions_category" ON "planning_activity_versions" USING btree ("category_version_id");--> statement-breakpoint
+CREATE INDEX "idx_planning_cat_versions_active" ON "planning_category_versions" USING btree ("isActive");--> statement-breakpoint
+CREATE INDEX "idx_planning_cat_versions_project" ON "planning_category_versions" USING btree ("project_id","facilityType");--> statement-breakpoint
+CREATE INDEX "idx_planning_config_active" ON "planning_configuration" USING btree ("isActive");--> statement-breakpoint
+CREATE INDEX "idx_planning_config_project" ON "planning_configuration" USING btree ("project_id","facilityType");--> statement-breakpoint
 CREATE VIEW "public"."v_planning_category_totals" AS (SELECT pc.id AS category_id, pc.project_id, pd.reporting_period_id, pd.facility_id, sum(pd.amount_q1) AS amount_q1, sum(pd.amount_q2) AS amount_q2, sum(pd.amount_q3) AS amount_q3, sum(pd.amount_q4) AS amount_q4, sum(pd.total_budget) AS total_budget FROM planning_data pd JOIN planning_activities pa ON pa.id = pd.activity_id JOIN planning_categories pc ON pc.id = pa.category_id GROUP BY pc.id, pc.project_id, pd.reporting_period_id, pd.facility_id);

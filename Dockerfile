@@ -1,62 +1,111 @@
-FROM node:18-alpine AS base
+## Multi-stage Dockerfile for Next.js (standalone output) with PNPM
+# Base images: use Debian slim to avoid native module headaches (e.g., sharp)
 
-# Install required Alpine packages and pnpm in a single layer
-RUN apk add --no-cache bash libc6-compat netcat-openbsd && \
-    npm install -g pnpm && \
-    npm cache clean --force
+# ------------------------------
+# 1) Builder stage
+# ------------------------------
+FROM node:20-slim AS builder
 
-# Install dependencies only when needed
-FROM base AS deps
+ENV NODE_ENV=production \
+    NEXT_TELEMETRY_DISABLED=1
+
+# Build-time args for required env vars (safe placeholders). Override with --build-arg as needed.
+ARG DB_HOST=placeholder
+ARG DB_PORT=5432
+ARG DB_USER=placeholder
+ARG DB_PASSWORD=placeholder
+ARG DB_NAME=placeholder
+ARG DATABASE_URL=postgres://user:password@localhost:5432/db
+ARG LOG_LEVEL=info
+ARG PORT=3000
+ARG DB_MIGRATING=false
+ARG DB_SEEDING=false
+
+# Export them as env so Next build can read them
+ENV DB_HOST=$DB_HOST \
+    DB_PORT=$DB_PORT \
+    DB_USER=$DB_USER \
+    DB_PASSWORD=$DB_PASSWORD \
+    DB_NAME=$DB_NAME \
+    DATABASE_URL=$DATABASE_URL \
+    LOG_LEVEL=$LOG_LEVEL \
+    PORT=$PORT \
+    DB_MIGRATING=$DB_MIGRATING \
+    DB_SEEDING=$DB_SEEDING
+
 WORKDIR /app
 
-# Copy package files
-COPY package.json pnpm-lock.yaml* ./
-RUN pnpm install --frozen-lockfile && \
-    pnpm store prune
+# Install OS deps used during build (git is occasionally required by some packages)
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ca-certificates git openssl && \
+    rm -rf /var/lib/apt/lists/*
 
-# Rebuild the source code only when needed
-FROM base AS builder
-WORKDIR /app
-COPY --from=deps /app/node_modules ./node_modules
+# Install pnpm globally
+RUN npm install -g pnpm
+
+# Enable corepack and prepare pnpm
+RUN corepack enable && corepack prepare pnpm@latest --activate
+
+# Leverage Docker layer caching: copy only manifests first
+COPY package.json pnpm-lock.yaml ./
+
+# Install deps (frozen lockfile for reproducibility)
+RUN pnpm install --frozen-lockfile
+
+# Copy source
 COPY . .
 
-# Build the application
+# Build Next.js (uses next.config.js output: "standalone")
 RUN pnpm build
 
-# Production image - use a minimal approach
-FROM node:18-alpine AS runner
+
+# ------------------------------
+# 2) Runtime stage
+# ------------------------------
+FROM node:20-slim AS runner
+
+ENV NODE_ENV=production \
+    NEXT_TELEMETRY_DISABLED=1 \
+    PORT=3000
+
+# Optional runtime defaults so the app can boot without external envs
+ARG DB_HOST=placeholder
+ARG DB_PORT=5432
+ARG DB_USER=placeholder
+ARG DB_PASSWORD=placeholder
+ARG DB_NAME=placeholder
+ARG DATABASE_URL=postgres://user:password@localhost:5432/db
+ARG LOG_LEVEL=info
+ARG DB_MIGRATING=false
+ARG DB_SEEDING=false
+
+ENV DB_HOST=$DB_HOST \
+    DB_PORT=$DB_PORT \
+    DB_USER=$DB_USER \
+    DB_PASSWORD=$DB_PASSWORD \
+    DB_NAME=$DB_NAME \
+    DATABASE_URL=$DATABASE_URL \
+    LOG_LEVEL=$LOG_LEVEL \
+    DB_MIGRATING=$DB_MIGRATING \
+    DB_SEEDING=$DB_SEEDING
+
 WORKDIR /app
 
-# Install only what we need for production
-RUN apk add --no-cache netcat-openbsd && \
-    npm install -g pnpm && \
-    npm cache clean --force
+# Create non-root user
+RUN useradd -m -u 1001 nextjs
 
-ENV NODE_ENV production
-ENV NEXT_TELEMETRY_DISABLED 1
-
-RUN addgroup --system --gid 1001 nodejs && \
-    adduser --system --uid 1001 nextjs
-
-# Copy only what's needed for migrations
-COPY package.json pnpm-lock.yaml* ./
-COPY --from=deps /app/node_modules ./node_modules
-
-# Copy database directory (contains migrations & other SQL files)
-COPY --from=builder /app/db ./db
-
-# Copy built application
+# Copy standalone server and static assets
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/.next/static ./.next/static
 COPY --from=builder /app/public ./public
-COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
-RUN chown -R nextjs:nodejs /app
-
-USER nextjs
-
+# Expose port
 EXPOSE 3000
 
-ENV PORT 3000
-ENV HOSTNAME "0.0.0.0"
+# Switch to non-root
+USER nextjs
 
+# Start Next.js standalone server
 CMD ["node", "server.js"]
+
+

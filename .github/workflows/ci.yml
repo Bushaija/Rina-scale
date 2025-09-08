@@ -1,0 +1,172 @@
+name: CI
+
+on:
+  push:
+    branches: [ "**" ]
+  pull_request:
+    branches: [ "**" ]
+  workflow_dispatch:
+    inputs:
+      run_docker:
+        description: "Build and push Docker image"
+        type: boolean
+        default: false
+  schedule:
+    - cron: "0 3 * * *" # daily at 03:00 UTC
+
+env:
+  NODE_VERSION: '20.x'
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  ci:
+    name: Install, Lint, Build
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+    # Uncomment to enable a Postgres service during CI (if you run migrations/tests)
+    # services:
+    #   postgres:
+    #     image: postgres:16-alpine
+    #     env:
+    #       POSTGRES_DB: finna_db
+    #       POSTGRES_USER: postgres
+    #       POSTGRES_PASSWORD: postgres
+    #     ports:
+    #       - 5432:5432
+    #     options: >-
+    #       --health-cmd "pg_isready -U postgres -d finna_db" 
+    #       --health-interval 10s --health-timeout 5s --health-retries 5
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'pnpm'
+
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v4
+        with:
+          version: latest
+          run_install: false
+
+      - name: Get PNPM store directory
+        id: pnpm-cache
+        run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - name: Cache PNPM store
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: pnpm-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: |
+            pnpm-${{ runner.os }}-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Cache Next.js build
+        uses: actions/cache@v4
+        with:
+          path: |
+            .next/cache
+          key: next-${{ runner.os }}-${{ hashFiles('**/*.tsx', '**/*.ts', 'next.config.*', 'package.json', 'pnpm-lock.yaml') }}
+          restore-keys: |
+            next-${{ runner.os }}-
+
+      - name: Lint
+        run: pnpm lint
+
+      # If you later add tests, wire them here
+      # - name: Test
+      #   run: pnpm test -- --ci
+
+      - name: Build
+        env:
+          # Provide minimal env so Next build and schema validation can run
+          NODE_ENV: production
+          PORT: 3000
+          LOG_LEVEL: info
+          DB_HOST: localhost
+          DB_PORT: 5432
+          DB_USER: postgres
+          DB_PASSWORD: postgres
+          DB_NAME: finna_db
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/finna_db
+          DB_MIGRATING: "false"
+          DB_SEEDING: "false"
+          BETTER_AUTH_SECRET: dev-secret-change-me
+        run: pnpm build
+
+      - name: Upload production build as artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: next-standalone
+          path: |
+            .next/standalone/**
+            .next/static/**
+            public/**
+          if-no-files-found: ignore
+
+  docker:
+    name: Build and Push Docker
+    needs: ci
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    if: >-
+      github.event_name == 'workflow_dispatch' && inputs.run_docker == true ||
+      github.event_name == 'push' && (startsWith(github.ref, 'refs/heads/main') || startsWith(github.ref, 'refs/tags/'))
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract Docker metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=ref,event=branch
+            type=ref,event=tag
+            type=sha
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          build-args: |
+            DB_HOST=placeholder
+            DB_PORT=5432
+            DB_USER=placeholder
+            DB_PASSWORD=placeholder
+            DB_NAME=placeholder
+            DATABASE_URL=postgres://user:password@localhost:5432/db
+            BETTER_AUTH_SECRET=${{ secrets.BETTER_AUTH_SECRET }}
+
+

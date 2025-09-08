@@ -1,83 +1,102 @@
-# version: '3.8'
+version: "3.9"
 
 services:
-  postgres:
-    image: postgres:15-alpine
-    container_name: ${APP_NAME}_postgres
+  db:
+    image: postgres:16-alpine
+    container_name: rina-db
     environment:
-      POSTGRES_DB: ${DB_NAME}
-      POSTGRES_USER: ${DB_USER}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      POSTGRES_DB: ${DB_NAME:-finna_db}
+      POSTGRES_USER: ${DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
     ports:
-      - "55432:5432"  # Map to 55432 to avoid conflicts with existing PostgreSQL
-    networks:
-      - app_network
-    restart: unless-stopped
+      # Expose if you want to connect from host tools (psql, IDE)
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
       interval: 5s
       timeout: 5s
-      retries: 5
+      retries: 10
 
-  db-migrate:
+  migrate:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: ${APP_NAME}_migrate
-    environment:
-      DATABASE_URL: postgresql://${DB_USER}:${DB_PASSWORD}@postgres:5432/${DB_NAME}
+      target: builder
+      args:
+        DB_HOST: db
+        DB_PORT: 5432
+        DB_USER: ${DB_USER:-postgres}
+        DB_PASSWORD: ${DB_PASSWORD:-postgres}
+        DB_NAME: ${DB_NAME:-finna_db}
+        DATABASE_URL: postgresql://${DB_USER:-postgres}:${DB_PASSWORD:-postgres}@db:5432/${DB_NAME:-finna_db}
+        BETTER_AUTH_SECRET: ${BETTER_AUTH_SECRET}
+    image: rina-scale:migrate
+    container_name: rina-migrate
     depends_on:
-      postgres:
+      db:
         condition: service_healthy
-    networks:
-      - app_network
-    command: |
-      sh -c "
-        echo 'Waiting for database to be ready...'
-        until nc -z postgres 5432; do 
-          echo 'Waiting for postgres...'
-          sleep 2
-        done
-        echo 'Database is ready!'
-        echo 'Running database migrations...'
-        pnpm db:migrate
-        echo 'Running database seeding...'
-        pnpm db:seed
-        echo 'Database setup complete!'
-      "
-    restart: "no"
+    environment:
+      NODE_ENV: production
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: ${DB_USER:-postgres}
+      DB_PASSWORD: ${DB_PASSWORD:-postgres}
+      DB_NAME: ${DB_NAME:-finna_db}
+      DATABASE_URL: postgresql://${DB_USER:-postgres}:${DB_PASSWORD:-postgres}@db:5432/${DB_NAME:-finna_db}
+    command: ["/bin/sh", "-c", "pnpm install --frozen-lockfile --prod=false && pnpm db:migrate && pnpm db:seed"]
 
-  app:
+  web:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: ${APP_NAME}_app
+      args:
+        # Build-time args for Next build; safe defaults
+        DB_HOST: db
+        DB_PORT: 5432
+        DB_USER: ${DB_USER:-postgres}
+        DB_PASSWORD: ${DB_PASSWORD:-postgres}
+        DB_NAME: ${DB_NAME:-finna_db}
+        DATABASE_URL: postgresql://${DB_USER:-postgres}:${DB_PASSWORD:-postgres}@db:5432/${DB_NAME:-finna_db}
+        BETTER_AUTH_SECRET: ${BETTER_AUTH_SECRET}
+    image: rina-scale:compose
+    container_name: rina-web
+    depends_on:
+      db:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+    # command: >
+    #   sh -c "
+    #     echo '⏳ Waiting for Postgres...' &&
+    #     until nc -z db 5432; do sleep 1; done &&
+    #     echo '✅ Postgres is ready!' &&
+    #     pnpm db:migrate &&
+    #     pnpm db:seed &&
+    #     pnpm start
+    #   "
     environment:
-      NODE_ENV: ${NODE_ENV}
-      LOG_LEVEL: ${LOG_LEVEL}
-      PORT: ${PORT}
-      DATABASE_URL: postgresql://${DB_USER}:${DB_PASSWORD}@postgres:5432/${DB_NAME}
-      BETTER_AUTH_URL: ${BETTER_AUTH_URL}
-      BETTER_AUTH_SECRET: ${BETTER_AUTH_SECRET}
-      EMAIL_VERIFICATION_CALLBACK_URL: ${EMAIL_VERIFICATION_CALLBACK_URL}
-      NEXT_PUBLIC_APP_URL: ${NEXT_PUBLIC_APP_URL}
+      NODE_ENV: production
+      PORT: 3000
+      LOG_LEVEL: ${LOG_LEVEL:-info}
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: ${DB_USER:-postgres}
+      DB_PASSWORD: ${DB_PASSWORD:-postgres}
+      DB_NAME: ${DB_NAME:-finna_db}
+      DATABASE_URL: postgresql://${DB_USER:-postgres}:${DB_PASSWORD:-postgres}@db:5432/${DB_NAME:-finna_db}
+      # Add any NEXT_PUBLIC_* envs here as needed, e.g.:
+      # NEXT_PUBLIC_API_BASE: http://localhost:3000
     ports:
       - "3000:3000"
-    depends_on:
-      postgres:
-        condition: service_healthy
-      db-migrate:
-        condition: service_completed_successfully
-    networks:
-      - app_network
-    restart: unless-stopped
+    # Option A: run app and seed manually afterwards
+    # command: ["node", "server.js"]
+    # Start the Next.js server (migrations handled by migrate service)
+    command: ["node", "server.js"]
 
 volumes:
-  postgres_data:
+  db-data:
+    driver: local
 
-networks:
-  app_network:
-    driver: bridge
+

@@ -1,7 +1,7 @@
 import { config } from "dotenv";
 import { expand } from "dotenv-expand";
 
-import { ZodError, z } from "zod";
+import { z } from "zod";
 
 const stringBoolean = z.coerce.string().transform((val) => {
   return val === "true";
@@ -19,26 +19,24 @@ const EnvSchema = z.object({
   DATABASE_URL: z.string(),
   DB_MIGRATING: stringBoolean,
   DB_SEEDING: stringBoolean,
+  BETTER_AUTH_SECRET: z.string().default("dev-secret-change-me"),
 });
 
-export type EnvSchema = z.infer<typeof EnvSchema>;
+// export type EnvSchema = z.infer<typeof EnvSchema>;
 
 expand(config());
 
-try {
-  EnvSchema.parse(process.env);
-} catch (error) {
-  if (error instanceof ZodError) {
-    let message = "Missing required values in .env:\n";
-    error.issues.forEach((issue) => {
-      message += issue.path[0] + "\n";
-    });
-    const e = new Error(message);
-    e.stack = "";
-    throw e;
-  } else {
-    console.error(error);
-  }
+
+// eslint-disable-next-line ts/no-redeclare
+const { data: env, error } = EnvSchema.safeParse(process.env);
+
+if (error) {
+  console.error("❌ Invalid env:");
+  console.error(JSON.stringify(error.flatten().fieldErrors, null, 2));
+  process.exit(1);
 }
 
-export default EnvSchema.parse(process.env);
+export default env!;
+
+// Parse once to surface type-safe values with defaults applied.
+// export default EnvSchema.parse(process.env);

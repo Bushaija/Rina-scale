@@ -174,8 +174,8 @@ export default function PlanningNewPage() {
   }
 
   return (
-    <div className="container mx-auto p-4 md:p-8">
-      <div className="">
+    <div className="containerr mx-autoo p-4 md:p-8 h-full">
+      <div className="border-2 border-blue-500">
         <div>
           <PlanForm
             isHospital={isHospital}
